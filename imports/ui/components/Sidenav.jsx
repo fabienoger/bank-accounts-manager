@@ -28,6 +28,9 @@ export default class Sidenav extends React.Component {
   }
 
   render() {
+    const AppContainer = (props) => (
+      <li><a href="#">{props.main}</a></li>
+    );
     return (
       <Navbar inverse collapseOnSelect fluid>
         <Navbar.Header>
@@ -36,7 +39,6 @@ export default class Sidenav extends React.Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
-
         <Navbar.Collapse>
           <Nav>
             <NavItem eventKey={1} href="#">Link</NavItem>
