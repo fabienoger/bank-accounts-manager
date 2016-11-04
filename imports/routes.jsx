@@ -13,7 +13,8 @@ FlowRouter.route('/', {
       pageName: "home",
       pageComponent: <Home />
     });
-  }
+  },
+  name: "home"
 });
 
 // LOGIN
@@ -45,4 +46,12 @@ function redirectIfIsNotLogin(context) {
   }
 }
 
+// Redirect the user if it is connected
+function redirectIfIsLogin(context) {
+  if (Meteor.userId()) {
+    FlowRouter.go('/');
+  }
+}
+
 FlowRouter.triggers.enter([redirectIfIsNotLogin], {except: ["login", "register"]});
+FlowRouter.triggers.enter([redirectIfIsLogin], {only: ["login", "register"]});

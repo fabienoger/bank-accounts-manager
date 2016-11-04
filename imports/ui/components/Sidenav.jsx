@@ -1,49 +1,61 @@
-import React                from 'react';
-import { createContainer }  from 'meteor/react-meteor-data';
-import {Row, Col}           from 'react-bootstrap'
-import { Meteor }           from 'meteor/meteor';
+import React                                          from 'react';
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem}  from 'react-bootstrap'
+import { Meteor }                                     from 'meteor/meteor';
 
 export default class Sidenav extends React.Component {
-  mixins: [ReactMeteorData]
-  getMeteorData() {
-    return {
-      currentUser: Meteor.user() || {}
-    };
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: null
+    }
+    Meteor.subscribe('users', (err, res) => {
+      this.setState({user: Meteor.users.findOne({_id: Meteor.userId()})});
+      Tracker.autorun(() => {
+         const userId = Meteor.userId()
+         this.setState({user: Meteor.users.findOne({_id: Meteor.userId()})});
+      });
+    })
   }
+
+  logout() {
+    Meteor.logout((err) => {
+      if (err) {
+        return console.error("Meteor.logout ", err);
+      }
+      this.setState({user: null});
+      FlowRouter.go('/');
+    });
+  }
+
   render() {
     return (
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <a className="navbar-brand" href="/">BAM</a>
-          </div>
+      <Navbar inverse collapseOnSelect fluid>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <a href="/">BAM</a>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
 
-          <div className="collapse navbar-collapse" id="navbar">
-            <ul className="nav navbar-nav">
-              <li key='home' className={this.props.page == 'home' ? 'active' : ''} >
-                <a href="/">Home</a>
-              </li>
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <li><a href="#">{ this.data.currentUser ? this.data.currentUser.username : '' }</a></li>
-              <li className="dropdown">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{ this.props.currentUser ? this.props.currentUser.username : '' } <span className="caret"></span></a>
-                <ul className="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li role="separator" className="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+        <Navbar.Collapse>
+          <Nav>
+            <NavItem eventKey={1} href="#">Link</NavItem>
+          </Nav>
+          <Nav pullRight>
+            <NavDropdown eventKey={1} title={this.state.user ? this.state.user.profile.username : 'Login'} id="basic-nav-dropdown">
+              {this.state.user ?
+                <MenuItem eventKey={1.3} href="/user">Profile</MenuItem> :
+                <MenuItem eventKey={1.3} href="/login">Sign In</MenuItem>
+              }
+              <MenuItem divider />
+              {this.state.user ?
+                <MenuItem eventKey={1.3} onClick={() => this.logout()}>Sign Out</MenuItem> :
+                <MenuItem eventKey={1.3} href="/register">Sign Up</MenuItem>
+              }
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     )
   }
 }
