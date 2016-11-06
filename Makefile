@@ -7,4 +7,5 @@ mergeOnMaster:
 	git checkout $(BRANCH)
 
 dev:
+	meteor npm install
 	meteor
