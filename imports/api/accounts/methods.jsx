@@ -36,5 +36,12 @@ Meteor.methods({
         active: false
       }
     });
+  },
+  updateAccount: (id, doc) => {
+    if (!id || !doc) {
+      throw new Meteor.Error("missing-param", "Missing parameter !");
+    }
+
+    BankAccounts.update({_id: id}, doc);
   }
 });
