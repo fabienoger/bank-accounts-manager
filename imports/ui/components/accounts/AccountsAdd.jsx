@@ -7,8 +7,40 @@ export default class AccountsAdd extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      error: null
+      error: null,
+      success: null,
+      name: '',
+      balance: 0
     }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    // Find the text field via the React ref
+    const name = ReactDOM.findDOMNode(this.refs.name).value.trim();
+    const balance = ReactDOM.findDOMNode(this.refs.balance).value.trim();
+
+    // Check values
+    if (!name || !balance) {
+      this.setState({error: "All fields are required !"});
+      return;
+    }
+    if (isNaN(balance)) {
+      this.setState({error: "Balance must be a number !"});
+      return;
+    }
+    Meteor.call("createAccount", name, balance, (err, result) => {
+      if (err) {
+        console.error("createAccount ", err);
+        this.setState({error: err.reason});
+        return;
+      }
+      this.setState({success: "Account has been created !"});
+      // Clear form
+      ReactDOM.findDOMNode(this.refs.name).value = '';
+      ReactDOM.findDOMNode(this.refs.balance).value = 0;
+    });
   }
 
   render() {
@@ -17,8 +49,19 @@ export default class AccountsAdd extends React.Component {
         <div className="page-header">
           <h2>Add acccount</h2>
         </div>
-        <form>
-
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
+          {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input type="text" className="form-control" ref="name" id="name" placeholder="Account name" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="balance">Balance <span className="label label-default">€</span></label>
+            <input type="number" className="form-control" ref="balance"
+              id="balance" placeholder="Account balance" />
+          </div>
+          <button type="submit" className="btn btn-success">Add</button>
         </form>
       </div>
     )

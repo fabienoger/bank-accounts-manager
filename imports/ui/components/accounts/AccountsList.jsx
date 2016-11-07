@@ -13,7 +13,7 @@ export default class AccountsList extends TrackerReact(React.Component) {
     super(props)
     this.state = {
       error: null,
-      accounts: Meteor.subscribe("accounts")
+      accounts: Meteor.subscribe("userAccounts", Meteor.userId())
     }
   }
 

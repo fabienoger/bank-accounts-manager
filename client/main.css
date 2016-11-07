@@ -1,5 +1,5 @@
 
 /* Remove Bootstrap border-radius */
-.navbar, .dropdown, .dropdown-menu, .form-control, .btn, .list-group-item {
+.navbar, .dropdown, .dropdown-menu, .form-control, .btn, .list-group-item, .alert, .label {
   border-radius: 0 !important;
 }

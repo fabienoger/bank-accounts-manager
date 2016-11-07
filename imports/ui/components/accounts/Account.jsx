@@ -6,7 +6,12 @@ import { Meteor }         from 'meteor/meteor';
 export default class Account extends React.Component {
   render() {
     return (
-      <ListGroupItem>{this.props.account.text}</ListGroupItem>
+      <ListGroupItem>
+        <span className="label label-default">
+          {this.props.account.name}
+        </span>
+        {this.props.account.balance} €
+      </ListGroupItem>
     )
   }
 }
