@@ -1,7 +1,7 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
 import { Meteor }         from 'meteor/meteor';
-import Alert              from '/imports/ui/components/Alert'
+import Alert              from '/imports/ui/components/Alert';
 
 export default class AccountsAdd extends React.Component {
   constructor(props) {

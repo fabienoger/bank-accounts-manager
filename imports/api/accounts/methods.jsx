@@ -1,5 +1,5 @@
 import {Meteor} from 'meteor/meteor'
-import Account from './collection.jsx'
+import BankAccount from './collection.jsx'
 
 Meteor.methods({
   createAccount: (name, balance) => {
@@ -12,14 +12,29 @@ Meteor.methods({
     if (!Meteor.userId()) {
       throw new Meteor.Error("user-required", "You must be connected !");
     }
-    const foundAccount = Accounts.findOne({name: name, createdBy: Meteor.userId()});
+    const foundAccount = BankAccounts.findOne({
+      name: name,
+      createdBy: Meteor.userId(),
+      active: true
+    });
     if (foundAccount) {
       throw new Meteor.Error("name-already-exists", "Name already exists !");
     }
 
-    Accounts.insert({
+    BankAccounts.insert({
       name: name,
       balance: balance
+    });
+  },
+  deleteAccount: (id) => {
+    if (!id) {
+      throw new Meteor.Error("missing-param", "Missing id parameter !");
+    }
+
+    BankAccounts.update({_id: id}, {
+      $set: {
+        active: false
+      }
     });
   }
 });

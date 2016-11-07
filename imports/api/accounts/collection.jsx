@@ -1,9 +1,9 @@
-Accounts = new Mongo.Collection('accounts')
+BankAccounts = new Mongo.Collection('accounts')
 
 if (Meteor.isServer) {
-  //Accounts._ensureIndex({name: 1}, {unique: 1});
+  //BankAccounts._ensureIndex({name: 1}, {unique: 1});
 
-  Accounts.allow({
+  BankAccounts.allow({
     remove: () => {
       return true
     },
@@ -13,4 +13,4 @@ if (Meteor.isServer) {
   })
 }
 
-export default Accounts
+export default BankAccounts
