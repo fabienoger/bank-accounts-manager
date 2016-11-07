@@ -4,7 +4,8 @@ import MainLayout           from '/imports/ui/layouts/MainLayout'
 import Home                 from '/imports/ui/pages/Home'
 import Login                from '/imports/ui/pages/Login'
 import Register             from '/imports/ui/pages/Register'
-import UserPage                 from '/imports/ui/pages/UserPage'
+import UserPage             from '/imports/ui/pages/UserPage'
+import AccountsPage         from '/imports/ui/pages/AccountsPage'
 import Sidenav              from '/imports/ui/components/Sidenav'
 
 // HOME
@@ -18,7 +19,18 @@ FlowRouter.route('/', {
   name: "home"
 });
 
-// HOME
+// ACCOUNTS
+FlowRouter.route('/accounts', {
+  action: function (params, queryParams) {
+    mount(MainLayout, {
+      pageName: "accounts",
+      pageComponent: <AccountsPage />
+    });
+  },
+  name: "accounts"
+});
+
+// USER
 FlowRouter.route('/user', {
   action: function (params, queryParams) {
     mount(MainLayout, {

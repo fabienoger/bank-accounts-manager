@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
-import '/imports/collections/user'
-import '/imports/collections/account'
+import '/imports/api/user'
+import '/imports/api/accounts'
 
 Meteor.startup(() => {
   // code to run on server at startup
