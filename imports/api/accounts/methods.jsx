@@ -23,7 +23,7 @@ Meteor.methods({
 
     BankAccounts.insert({
       name: name,
-      balance: balance
+      balance: parseInt(balance)
     });
   },
   deleteAccount: (id) => {

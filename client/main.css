@@ -3,3 +3,8 @@
 .navbar, .dropdown, .dropdown-menu, .form-control, .btn, .list-group-item, .alert, .label, .modal-content {
   border-radius: 0 !important;
 }
+
+/* Remove */
+.btn:focus {
+  outline: none !important;
+}

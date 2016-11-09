@@ -33,13 +33,19 @@ export default class Account extends React.Component {
   render() {
     const createdBy = Meteor.users.findOne({_id: this.props.account.createdBy});
     const updatedBy = Meteor.users.findOne({_id: this.props.account.updatedBy});
+    const urlToAccount = `/accounts/${this.props.account._id}`;
     return (
       <div className="account">
         {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
         {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
-        {this.props.account.name}
-        <span className="badge pull-right">{this.props.account.balance} €</span>
         <ListGroup>
+          <ListGroupItem>Name : {this.props.account.name ? this.props.account.name : ''}</ListGroupItem>
+          <ListGroupItem>Balance :&nbsp;
+            <span>
+              {this.props.account.balance ? this.props.account.balance : ''}
+              &nbsp;<span className="badge">€</span>
+            </span>
+          </ListGroupItem>
           <ListGroupItem>Created by : {createdBy ? createdBy.profile.username : ''}</ListGroupItem>
           <ListGroupItem>Created at : {this.props.account.createdAt}</ListGroupItem>
           <ListGroupItem>Updated by : {updatedBy ? updatedBy.profile.username : ''}</ListGroupItem>
@@ -48,6 +54,7 @@ export default class Account extends React.Component {
         {this.state.displayUpdate ? <AccountUpdate account={this.props.account} /> : ''}
         <div className="actions">
           <ButtonGroup>
+            <Button href={urlToAccount} bsStyle="primary">Details</Button>
             <Button bsStyle="primary" onClick={this.displayUpdate.bind(this)}>Update</Button>
             <Button bsStyle="danger" onClick={this.deleteAccount.bind(this)}>Delete</Button>
           </ButtonGroup>

@@ -59,7 +59,7 @@ export default class AccountUpdate extends React.Component {
 
   render() {
     return (
-      <div className="accounts-update">
+      <div className="account-update">
         <form onSubmit={this.handleSubmit.bind(this)}>
           {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
           {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
@@ -70,7 +70,7 @@ export default class AccountUpdate extends React.Component {
           </div>
           <div className="form-group">
             <label htmlFor="balance">Balance <span className="label label-default">€</span></label>
-            <input type="number" className="form-control" ref="balance"
+            <input type="text" className="form-control" ref="balance"
               id="balance" placeholder="Account balance"
               value={this.state.balance} onChange={this.balanceChange.bind(this)} />
           </div>

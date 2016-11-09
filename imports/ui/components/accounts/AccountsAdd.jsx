@@ -58,7 +58,7 @@ export default class AccountsAdd extends React.Component {
           </div>
           <div className="form-group">
             <label htmlFor="balance">Balance <span className="label label-default">€</span></label>
-            <input type="number" className="form-control" ref="balance"
+            <input type="text" className="form-control" ref="balance"
               id="balance" placeholder="Account balance" />
           </div>
           <button type="submit" className="btn btn-success">Add</button>
