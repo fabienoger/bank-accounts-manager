@@ -6,6 +6,8 @@ import Login                from '/imports/ui/pages/Login'
 import Register             from '/imports/ui/pages/Register'
 import UserPage             from '/imports/ui/pages/UserPage'
 import AccountsPage         from '/imports/ui/pages/AccountsPage'
+import AccountPage         from '/imports/ui/pages/AccountPage'
+import TransactionsPage     from '/imports/ui/pages/TransactionsPage'
 import Sidenav              from '/imports/ui/components/Sidenav'
 
 // HOME
@@ -19,6 +21,17 @@ FlowRouter.route('/', {
   name: "home"
 });
 
+// TRANSACTIONS
+FlowRouter.route('/transactions', {
+  action: function (params, queryParams) {
+    mount(MainLayout, {
+      pageName: "transactions",
+      pageComponent: <TransactionsPage />
+    });
+  },
+  name: "transactions"
+});
+
 // ACCOUNTS
 FlowRouter.route('/accounts', {
   action: function (params, queryParams) {
@@ -28,6 +41,16 @@ FlowRouter.route('/accounts', {
     });
   },
   name: "accounts"
+});
+
+FlowRouter.route('/accounts/:accountId', {
+  action: function (params, queryParams) {
+    mount(MainLayout, {
+      pageName: "account",
+      pageComponent: <AccountPage accountId={params.accountId} />
+    });
+  },
+  name: "account"
 });
 
 // USER
