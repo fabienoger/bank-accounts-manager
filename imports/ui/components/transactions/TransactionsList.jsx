@@ -4,32 +4,14 @@ import {ListGroup}          from 'react-bootstrap'
 import { Meteor }           from 'meteor/meteor';
 import Alert                from '/imports/ui/components/Alert'
 import TransactionItem      from '/imports/ui/components/transactions/TransactionItem'
-import Transactions         from '/imports/api/transactions/collection'
-import Loading              from '/imports/ui/components/Loading'
-import TrackerReact         from 'meteor/ultimatejs:tracker-react'
 
-export default class TransactionsList extends TrackerReact(React.Component) {
+export default class TransactionsList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      error: null,
-      transactions: Meteor.subscribe("transactions")
-    }
-  }
-
-  componentWillUnmount() {
-    this.state.transactions.stop();
-  }
-
-  getTransactions() {
-    return Transactions.find().fetch();
   }
 
   render() {
-    let transactions = this.getTransactions();
-    if (!this.state.transactions.ready()) {
-      return (<Loading />)
-    }
+    let transactions = this.props.transactions;
     return (
       <div className="transactions-list">
         <div className="page-header">
@@ -44,3 +26,7 @@ export default class TransactionsList extends TrackerReact(React.Component) {
     )
   }
 }
+
+TransactionsList.propTypes = {
+  transactions: PropTypes.array.isRequired,
+};

@@ -10,3 +10,10 @@ Meteor.publish('accountTransactions', (accountId) => {
   }
   return Transactions.find({active: true, accountId: accountId});
 });
+
+Meteor.publish('userTransactions', (userId) => {
+  if (!userId) {
+    throw new Meteor.Error("missing-param", "Missing userId parameter !");
+  }
+  return Transactions.find({active: true, createdBy: userId});
+});

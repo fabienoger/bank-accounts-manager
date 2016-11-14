@@ -6,7 +6,7 @@ import Login                from '/imports/ui/pages/Login'
 import Register             from '/imports/ui/pages/Register'
 import UserPage             from '/imports/ui/pages/UserPage'
 import AccountsPage         from '/imports/ui/pages/AccountsPage'
-import AccountPage         from '/imports/ui/pages/AccountPage'
+import AccountPage          from '/imports/ui/pages/AccountPage'
 import TransactionsPage     from '/imports/ui/pages/TransactionsPage'
 import Sidenav              from '/imports/ui/components/Sidenav'
 

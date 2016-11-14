@@ -2,25 +2,22 @@ import React, {PropTypes}             from 'react';
 import ReactDOM                       from 'react-dom';
 import {ListGroupItem, Modal, Button} from 'react-bootstrap'
 import { Meteor }                     from 'meteor/meteor';
+import TrackerReact                   from 'meteor/ultimatejs:tracker-react'
 import Transaction                    from '/imports/ui/components/transactions/Transaction'
 import Loading                        from '/imports/ui/components/Loading'
 import Accounts                       from '/imports/api/accounts/collection'
 
-export default class TransactionItem extends React.Component {
+export default class TransactionItem extends TrackerReact(React.Component) {
   constructor(props) {
     super(props)
     this.state = {
       showModal: false,
-      accounts: Meteor.subscribe("accounts")
+      account: Meteor.subscribe("account", Meteor.userId(), this.props.transaction.accountId)
     }
   }
 
   componentWillUnmount() {
-    this.state.accounts.stop();
-  }
-
-  getAccount(id) {
-    return Accounts.findOne({_id: id});
+    this.state.account.stop();
   }
 
   close() {
@@ -37,7 +34,7 @@ export default class TransactionItem extends React.Component {
   }
 
   render() {
-    const account = this.getAccount(this.props.transaction.accountId);
+    const account = Accounts.findOne({_id: this.props.transaction.accountId});
     return (
       <ListGroupItem onClick={this.showDetails.bind(this)}>
         {account ?
@@ -50,7 +47,10 @@ export default class TransactionItem extends React.Component {
             <Modal.Title>{this.props.transaction.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Transaction transaction={this.props.transaction} account={account} />
+          {account ?
+            <Transaction transaction={this.props.transaction} account={account} /> :
+            <Loading />
+          }
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close.bind(this)}>Close</Button>

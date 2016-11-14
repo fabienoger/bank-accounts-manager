@@ -1,29 +1,19 @@
-import React              from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM           from 'react-dom';
 import { Meteor }         from 'meteor/meteor';
 import Alert              from '/imports/ui/components/Alert';
 import Accounts           from '/imports/api/accounts/collection'
-import TrackerReact       from 'meteor/ultimatejs:tracker-react'
 import Loading            from '/imports/ui/components/Loading'
 
-export default class TransactionsAdd extends TrackerReact(React.Component) {
+export default class TransactionsAdd extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       error: null,
       success: null,
       name: '',
-      value: 0,
-      accounts: Meteor.subscribe("userAccounts", Meteor.userId())
+      value: 0
     }
-  }
-
-  componentWillUnmount() {
-    this.state.accounts.stop();
-  }
-
-  getAccounts() {
-    return Accounts.find().fetch();
   }
 
   handleSubmit(event) {
@@ -57,7 +47,7 @@ export default class TransactionsAdd extends TrackerReact(React.Component) {
   }
 
   render() {
-    let accounts = this.getAccounts();
+    const accounts = this.props.accounts;
     return (
       <div className="transactions-add">
         <div className="page-header">
@@ -66,7 +56,7 @@ export default class TransactionsAdd extends TrackerReact(React.Component) {
         <form onSubmit={this.handleSubmit.bind(this)}>
           {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
           {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
-          {this.state.accounts.ready() ?
+          {accounts ?
             <div className="form-group">
               <label htmlFor="accountSelect">Choose an account</label>
               <select ref="accountSelect" id="accountSelect" className="form-control" defaultValue={this.props.accountId}>
@@ -91,3 +81,6 @@ export default class TransactionsAdd extends TrackerReact(React.Component) {
     )
   }
 }
+TransactionsAdd.propTypes = {
+  accounts: PropTypes.array.isRequired,
+};
