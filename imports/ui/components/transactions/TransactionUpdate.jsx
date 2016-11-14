@@ -20,7 +20,7 @@ export default class TransactionUpdate extends React.Component {
   }
 
   valueChange(e) {
-    this.setState({value: e.target.value.trim()});
+    this.setState({value: e.target.value.trim().replace(",", ".")});
   }
 
   handleSubmit(event) {
@@ -35,8 +35,8 @@ export default class TransactionUpdate extends React.Component {
       this.setState({error: "All fields are required !"});
       return;
     }
-    if (isNaN(value)) {
-      this.setState({error: "Value must be a number !"});
+    if (isNaN(value) || value < 0) {
+      this.setState({error: "Value must be a positive number !"});
       return;
     }
     const doc = {

@@ -27,7 +27,7 @@ export default class AccountUpdate extends React.Component {
 
     // Find the text field via the React ref
     const name = ReactDOM.findDOMNode(this.refs.name).value.trim();
-    const balance = ReactDOM.findDOMNode(this.refs.balance).value.trim();
+    const balance = ReactDOM.findDOMNode(this.refs.balance).value.trim().replace(",", ".");
 
     // Check values
     if (!name || !balance) {

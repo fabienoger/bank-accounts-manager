@@ -31,7 +31,7 @@ export default class TransactionsAdd extends TrackerReact(React.Component) {
 
     // Find the text field via the React ref
     const name = ReactDOM.findDOMNode(this.refs.name).value.trim();
-    const value = ReactDOM.findDOMNode(this.refs.value).value.trim();
+    const value = ReactDOM.findDOMNode(this.refs.value).value.trim().replace(",", ".");
     const accountId = ReactDOM.findDOMNode(this.refs.accountSelect).value.trim();
 
     // Check values
@@ -39,8 +39,8 @@ export default class TransactionsAdd extends TrackerReact(React.Component) {
       this.setState({error: "All fields are required !"});
       return;
     }
-    if (isNaN(value)) {
-      this.setState({error: "Value must be a number !"});
+    if (isNaN(value) || value < 0) {
+      this.setState({error: "Value must be a positive number !"});
       return;
     }
     Meteor.call("createTransaction", name, value, accountId, (err, result) => {
@@ -69,7 +69,7 @@ export default class TransactionsAdd extends TrackerReact(React.Component) {
           {this.state.accounts.ready() ?
             <div className="form-group">
               <label htmlFor="accountSelect">Choose an account</label>
-              <select ref="accountSelect" id="accountSelect" className="form-control">
+              <select ref="accountSelect" id="accountSelect" className="form-control" defaultValue={this.props.accountId}>
                 {accounts.map((account) => {
                   return (<option key={account._id} value={account._id}>{account.name}</option>)
                 })}

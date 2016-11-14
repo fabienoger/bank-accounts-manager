@@ -15,7 +15,7 @@ export default class AccountPage extends React.Component {
           <AccountTransactionsList accountId={this.props.accountId} />
         </Col>
         <Col md={6}>
-          <TransactionsAdd />
+          <TransactionsAdd accountId={this.props.accountId}/>
         </Col>
       </Row>
     )
