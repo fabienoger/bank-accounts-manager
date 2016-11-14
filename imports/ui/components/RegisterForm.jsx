@@ -45,7 +45,7 @@ export default class RegisterForm extends React.Component {
       }
     };
 
-    Accounts.createUser(user, function(err) {
+    Accounts.createUser(user, (err) => {
       if (err) {
         console.error("createUser", err);
         return this.setState({error: err.reason});
