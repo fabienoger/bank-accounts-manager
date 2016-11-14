@@ -14,7 +14,7 @@ Meteor.methods({
       throw new Meteor.Error("account-not-exists", "Account not exists !");
     }
     const doc = {
-      $inc: {balance: - parseInt(value)}
+      $inc: {balance: - parseFloat(value)}
     };
     Meteor.call("updateAccount", foundAccount._id, doc, function(err, result) {
       if (err) {
@@ -23,7 +23,7 @@ Meteor.methods({
 
       return Transactions.insert({
         name: name,
-        value: parseInt(value),
+        value: parseFloat(value),
         accountId: accountId
       });
     });
@@ -33,7 +33,7 @@ Meteor.methods({
       throw new Meteor.Error("missing-param", "Missing id parameter !");
     }
 
-    Transactions.update({_id: id}, {
+    return Transactions.update({_id: id}, {
       $set: {
         active: false
       }
@@ -44,6 +44,6 @@ Meteor.methods({
       throw new Meteor.Error("missing-param", "Missing parameter !");
     }
 
-    Transactions.update({_id: id}, doc);
+    return Transactions.update({_id: id}, doc);
   }
 });

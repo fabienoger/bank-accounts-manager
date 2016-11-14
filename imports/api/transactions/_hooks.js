@@ -9,6 +9,19 @@ Transactions.before.insert((userId, doc) => {
 });
 
 Transactions.after.update((userId, doc, fieldNames, modifier) => {
+  // Check if active is set to false
+  if (_.contains(fieldNames, "active") && modifier.$set.active == false) {
+    // Update Account balance
+    const accountDoc = {
+      $inc: {balance: parseFloat(doc.value)}
+    };
+    Meteor.call("updateAccount", doc.accountId, accountDoc, function(err, result) {
+      if (err) {
+        return console.error("updateAccount", error);
+      }
+    });
+  }
+
   doc.updatedBy = userId;
   doc.lastUpdate = Date.now();
 });

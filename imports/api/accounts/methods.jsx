@@ -21,9 +21,9 @@ Meteor.methods({
       throw new Meteor.Error("name-already-exists", "Name already exists !");
     }
 
-    BankAccounts.insert({
+    return BankAccounts.insert({
       name: name,
-      balance: parseInt(balance)
+      balance: parseFloat(balance)
     });
   },
   deleteAccount: (id) => {
@@ -31,7 +31,7 @@ Meteor.methods({
       throw new Meteor.Error("missing-param", "Missing id parameter !");
     }
 
-    BankAccounts.update({_id: id}, {
+    return BankAccounts.update({_id: id}, {
       $set: {
         active: false
       }
@@ -42,6 +42,6 @@ Meteor.methods({
       throw new Meteor.Error("missing-param", "Missing parameter !");
     }
 
-    BankAccounts.update({_id: id}, doc);
+    return BankAccounts.update({_id: id}, doc);
   }
 });
