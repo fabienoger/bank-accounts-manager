@@ -54,7 +54,7 @@ export default class Account extends React.Component {
         {this.state.displayUpdate ? <AccountUpdate account={this.props.account} /> : ''}
         <div className="actions">
           <ButtonGroup>
-            <Button href={urlToAccount} bsStyle="primary">Details</Button>
+            <Button href={urlToAccount} bsStyle="info">Details</Button>
             <Button bsStyle="primary" onClick={this.displayUpdate.bind(this)}>Update</Button>
             <Button bsStyle="danger" onClick={this.deleteAccount.bind(this)}>Delete</Button>
           </ButtonGroup>

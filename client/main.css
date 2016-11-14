@@ -4,7 +4,20 @@
   border-radius: 0 !important;
 }
 
-/* Remove */
+/* Remove outline */
 .btn:focus {
   outline: none !important;
+}
+
+div.account-update, div.transaction-update {
+  margin-bottom: 15px;
+}
+
+div.account-transactions-list div.page-header {
+  margin-top: 0;
+}
+
+div.account-transactions-list div.page-header a, div.account-transactions-list div.page-header a:hover {
+  text-decoration: none;
+  color: inherit;
 }

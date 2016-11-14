@@ -23,7 +23,7 @@ export default class Sidenav extends React.Component {
         return console.error("Meteor.logout ", err);
       }
       this.setState({user: null});
-      FlowRouter.go('/');
+      FlowRouter.go('/login');
     });
   }
 
