@@ -26,6 +26,7 @@ export default class AccountPage extends TrackerReact(React.Component) {
       return (<Loading />)
     }
     const account = Accounts.findOne({_id: this.props.accountId});
+    const accounts = Accounts.find({}).fetch();
     const transactions = Transactions.find({accountId: this.props.accountId}).fetch();
     return (
       <Row className="accounts-page">
@@ -33,7 +34,7 @@ export default class AccountPage extends TrackerReact(React.Component) {
           <AccountTransactionsList account={account} transactions={transactions} />
         </Col>
         <Col md={6}>
-          <TransactionsAdd accountId={this.props.accountId} />
+          <TransactionsAdd accountId={this.props.accountId} accounts={accounts} />
         </Col>
       </Row>
     )

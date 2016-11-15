@@ -1,6 +1,7 @@
 import React, {PropTypes}                               from 'react';
 import ReactDOM                                         from 'react-dom';
 import {ListGroup, ListGroupItem, ButtonGroup, Button}  from 'react-bootstrap';
+import {FormattedDate, IntlProvider}                    from 'react-intl';
 import { Meteor }                                       from 'meteor/meteor';
 import Alert                                            from '/imports/ui/components/Alert';
 import AccountUpdate                                    from '/imports/ui/components/accounts/AccountUpdate.jsx';
@@ -47,9 +48,17 @@ export default class Account extends React.Component {
             </span>
           </ListGroupItem>
           <ListGroupItem>Created by : {createdBy ? createdBy.profile.username : ''}</ListGroupItem>
-          <ListGroupItem>Created at : {this.props.account.createdAt}</ListGroupItem>
+          <ListGroupItem>Created at :&nbsp;
+            <IntlProvider locale="en">
+              <FormattedDate value={this.props.account.createdAt} />
+            </IntlProvider>
+          </ListGroupItem>
           <ListGroupItem>Updated by : {updatedBy ? updatedBy.profile.username : ''}</ListGroupItem>
-          <ListGroupItem>Last update at : {this.props.account.lastUpdate}</ListGroupItem>
+          <ListGroupItem>Last update at :&nbsp;
+            <IntlProvider locale="en">
+              <FormattedDate value={this.props.account.lastUpdate} />
+            </IntlProvider>
+          </ListGroupItem>
         </ListGroup>
         {this.state.displayUpdate ? <AccountUpdate account={this.props.account} /> : ''}
         <div className="actions">

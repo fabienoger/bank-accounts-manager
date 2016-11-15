@@ -1,6 +1,7 @@
 import React, {PropTypes}                               from 'react';
 import ReactDOM                                         from 'react-dom';
 import {ListGroup, ListGroupItem, ButtonGroup, Button}  from 'react-bootstrap';
+import {FormattedDate, IntlProvider}                    from 'react-intl';
 import { Meteor }                                       from 'meteor/meteor';
 import Alert                                            from '/imports/ui/components/Alert';
 import TransactionUpdate                                from '/imports/ui/components/transactions/TransactionUpdate.jsx';
@@ -47,9 +48,17 @@ export default class Transaction extends React.Component {
           </ListGroupItem>
           <ListGroupItem href={accountLink} >Account : {this.props.account.name ? this.props.account.name : ''}</ListGroupItem>
           <ListGroupItem>Created by : {createdBy ? createdBy.profile.username : ''}</ListGroupItem>
-          <ListGroupItem>Created at : {this.props.transaction.createdAt}</ListGroupItem>
+          <ListGroupItem>Created at :&nbsp;
+            <IntlProvider locale="en">
+              <FormattedDate value={this.props.transaction.createdAt} />
+            </IntlProvider>
+          </ListGroupItem>
           <ListGroupItem>Updated by : {updatedBy ? updatedBy.profile.username : ''}</ListGroupItem>
-          <ListGroupItem>Last update at : {this.props.transaction.lastUpdate}</ListGroupItem>
+          <ListGroupItem>Last update at :&nbsp;
+            <IntlProvider locale="en">
+              <FormattedDate value={this.props.transaction.lastUpdate} />
+            </IntlProvider>
+          </ListGroupItem>
         </ListGroup>
         {this.state.displayUpdate ? <TransactionUpdate transaction={this.props.transaction} /> : ''}
         <div className="actions">

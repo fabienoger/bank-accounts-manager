@@ -50,7 +50,7 @@ export default class AccountUpdate extends React.Component {
         this.setState({error: err.reason});
         return;
       }
-      this.setState({success: "Account has been created !"});
+      this.setState({success: "Account has been updated !"});
       // Clear form
       ReactDOM.findDOMNode(this.refs.name).value = '';
       ReactDOM.findDOMNode(this.refs.balance).value = 0;
