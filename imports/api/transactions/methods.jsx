@@ -6,8 +6,8 @@ Meteor.methods({
     if (!name || !value || !accountId) {
       throw new Meteor.Error("fields-required", "All fields are required !");
     }
-    if (isNaN(value)) {
-      throw new Meteor.Error("value-is-nan", "Value must be a number !");
+    if (isNaN(value) || value < 0) {
+      throw new Meteor.Error("value-is-nan-or-negative", "Value must be a positive number !");
     }
     const foundAccount = BankAccounts.findOne({_id: accountId});
     if (!foundAccount) {
@@ -43,7 +43,9 @@ Meteor.methods({
     if (!id || !doc) {
       throw new Meteor.Error("missing-param", "Missing parameter !");
     }
-
+    if (doc.$set && doc.$set.value) {
+      doc.$set.value = parseFloat(doc.$set.value);
+    }
     return Transactions.update({_id: id}, doc);
   }
 });

@@ -10,7 +10,7 @@ Transactions.before.insert((userId, doc) => {
 
 Transactions.before.update((userId, doc, fieldNames, modifier) => {
   // Check if active is set to false
-  if ((_.contains(fieldNames, "active") && modifier.$set.active == false) || _.contains(fieldNames, "value")) {
+  if ((_.contains(fieldNames, "active") && modifier.$set && modifier.$set.active == false) || _.contains(fieldNames, "value")) {
     let value = doc.value;
     if (_.contains(fieldNames, "value")) {
       value = doc.value - modifier.$set.value
@@ -22,11 +22,12 @@ Transactions.before.update((userId, doc, fieldNames, modifier) => {
     };
     Meteor.call("updateAccount", doc.accountId, accountDoc, function(err, result) {
       if (err) {
-        return console.error("updateAccount", error);
+        return console.error("updateAccount", err);
       }
     });
   }
 
-  doc.updatedBy = userId;
-  doc.lastUpdate = Date.now();
+  if (!modifier.$set) modifier.$set = {};
+  modifier.$set.lastUpdate = Date.now();
+  modifier.$set.updatedBy = userId;
 });

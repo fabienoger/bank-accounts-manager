@@ -8,7 +8,8 @@ BankAccounts.before.insert((userId, doc) => {
   doc.active = true;
 });
 
-BankAccounts.after.update((userId, doc, fieldNames, modifier) => {
-  doc.updatedBy = userId;
-  doc.lastUpdate = Date.now();
+BankAccounts.before.update((userId, doc, fieldNames, modifier) => {
+  if (!modifier.$set) modifier.$set = {};
+  modifier.$set.lastUpdate = Date.now();
+  modifier.$set.updatedBy = userId;
 });

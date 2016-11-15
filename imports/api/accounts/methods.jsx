@@ -42,6 +42,11 @@ Meteor.methods({
       throw new Meteor.Error("missing-param", "Missing parameter !");
     }
 
+    if (doc.$inc && doc.$inc.balance) {
+      doc.$inc.balance = parseFloat(doc.$inc.balance);
+    } else if (doc.$set && doc.$set.balance) {
+      doc.$set.balance = parseFloat(doc.$set.balance);
+    }
     return BankAccounts.update({_id: id}, doc);
   }
 });
