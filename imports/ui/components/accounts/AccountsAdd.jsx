@@ -45,11 +45,9 @@ export default class AccountsAdd extends React.Component {
 
   render() {
     return (
-      <div className="accounts-add">
-        <div className="page-header">
-          <h2>Add acccount</h2>
-        </div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
+      <form className="accounts-add panel panel-primary" onSubmit={this.handleSubmit.bind(this)}>
+        <div className="panel-heading">Add account</div>
+        <div className="panel-body">
           {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
           {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
           <div className="form-group">
@@ -61,9 +59,11 @@ export default class AccountsAdd extends React.Component {
             <input type="text" className="form-control" ref="balance"
               id="balance" placeholder="Account balance" />
           </div>
+        </div>
+        <div className="panel-footer">
           <button type="submit" className="btn btn-success">Add</button>
-        </form>
-      </div>
+        </div>
+      </form>
     )
   }
 }

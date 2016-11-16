@@ -49,14 +49,14 @@ export default class TransactionsAdd extends React.Component {
   render() {
     const accounts = this.props.accounts;
     return (
-      <div className="transactions-add">
-        <div className="page-header">
-          <h2>Add transaction</h2>
+      <form className="transactions-add panel panel-primary" onSubmit={this.handleSubmit.bind(this)}>
+        <div className="panel-heading">
+          Add transaction
         </div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <div className="panel-body">
           {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
           {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
-          {accounts ?
+          {accounts.length > 0 ?
             <div className="form-group">
               <label htmlFor="accountSelect">Choose an account</label>
               <select ref="accountSelect" id="accountSelect" className="form-control" defaultValue={this.props.accountId}>
@@ -65,7 +65,7 @@ export default class TransactionsAdd extends React.Component {
                 })}
               </select>
             </div>
-          : <Loading />}
+          :  <Alert message="You need to create an account before !" type="warning" />}
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input type="text" className="form-control" ref="name" id="name" placeholder="Transaction name" />
@@ -75,9 +75,15 @@ export default class TransactionsAdd extends React.Component {
             <input type="text" className="form-control" ref="value"
               id="value" placeholder="Transaction value" />
           </div>
-          <button type="submit" className="btn btn-success">Add</button>
-        </form>
-      </div>
+        </div>
+        <div className="panel-footer">
+          {accounts.length > 0 ?
+            <button type="submit" className="btn btn-success">Add</button>
+          :
+            <button type="submit" className="btn btn-success disabled">Add</button>
+          }
+        </div>
+      </form>
     )
   }
 }

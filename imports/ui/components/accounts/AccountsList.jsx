@@ -1,6 +1,6 @@
 import React, {PropTypes}   from 'react';
 import ReactDOM             from 'react-dom';
-import {ListGroup}          from 'react-bootstrap'
+import {ListGroup, Panel}   from 'react-bootstrap'
 import { Meteor }           from 'meteor/meteor';
 import Alert                from '/imports/ui/components/Alert'
 import AccountItem          from '/imports/ui/components/accounts/AccountItem'
@@ -31,16 +31,13 @@ export default class AccountsList extends TrackerReact(React.Component) {
       return (<Loading />)
     }
     return (
-      <div className="accounts-list">
-        <div className="page-header">
-          <h2>Accounts List</h2>
-        </div>
-        <ListGroup>
+      <Panel bsStyle="primary" className="accounts-list" collapsible defaultExpanded header="Accounts List">
+        <ListGroup fill>
           {accounts.map((account) => {
             return <AccountItem key={account._id} account={account} />
           })}
         </ListGroup>
-      </div>
+      </Panel>
     )
   }
 }

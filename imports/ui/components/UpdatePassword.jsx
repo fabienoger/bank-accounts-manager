@@ -1,6 +1,5 @@
 import React        from 'react';
 import ReactDOM     from 'react-dom';
-import {Row, Col}   from 'react-bootstrap'
 import { Meteor }   from 'meteor/meteor';
 import Alert        from '/imports/ui/components/Alert'
 
@@ -55,11 +54,9 @@ export default class UpdatePassword extends React.Component {
 
   render() {
     return (
-      <div className="update-password">
-        <div className="page-header">
-          <h2>Update password</h2>
-        </div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
+      <form className="update-password panel panel-primary" onSubmit={this.handleSubmit.bind(this)}>
+        <div className="panel-heading">Update password</div>
+        <div className="panel-body">
           {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
           {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
           <div className="form-group">
@@ -74,9 +71,11 @@ export default class UpdatePassword extends React.Component {
             <label htmlFor="confirm-new-password">Confirm new password</label>
             <input type="password" className="form-control" ref="confirmNewPassword" id="confirm-new-password" placeholder="Confirm new password" />
           </div>
+        </div>
+        <div className="panel-footer">
           <button type="submit" className="btn btn-success">Update password</button>
-        </form>
-      </div>
+        </div>
+      </form>
     )
   }
 }
