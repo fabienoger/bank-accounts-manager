@@ -3,6 +3,7 @@ import ReactDOM           from 'react-dom';
 import {ListGroup}        from 'react-bootstrap'
 import { Meteor }         from 'meteor/meteor';
 import TransactionItem    from '/imports/ui/components/transactions/TransactionItem'
+import TransactionsAdd     from '/imports/ui/components/transactions/TransactionsAdd'
 
 export default class AccountTransactionsList extends React.Component {
   constructor(props) {
@@ -22,11 +23,15 @@ export default class AccountTransactionsList extends React.Component {
             </a>
           : '' }
         </div>
+        {transactions.length > 0 ?
         <ListGroup>
           {transactions.map((transaction) => {
             return <TransactionItem key={transaction._id} transaction={transaction} />
           })}
         </ListGroup>
+        :
+          <TransactionsAdd accounts={[account]} />
+        }
       </div>
     )
   }

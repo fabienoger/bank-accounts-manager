@@ -1,6 +1,7 @@
 
 /* Remove Bootstrap border-radius */
-.navbar, .dropdown, .dropdown-menu, .form-control, .btn, .list-group-item, .alert, .label, .modal-content {
+.navbar, .dropdown, .dropdown-menu, .form-control, .btn, .list-group-item,
+.alert, .label, .modal-content, .panel, .panel-heading {
   border-radius: 0 !important;
 }
 

@@ -75,6 +75,7 @@ export default class RegisterForm extends React.Component {
           <input type="password" className="form-control" ref="confirmPassword" id="register-confirm-password" placeholder="Password" />
         </div>
         <button type="submit" className="btn btn-success">Register</button>
+        <a href="/login" className="pull-right">Login</a>
       </form>
     )
   }

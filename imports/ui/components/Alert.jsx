@@ -1,6 +1,6 @@
-import React        from 'react';
-import {Row, Col}   from 'react-bootstrap'
-import { Meteor }   from 'meteor/meteor';
+import React, {PropTypes} from 'react';
+import {Row, Col}         from 'react-bootstrap'
+import { Meteor }         from 'meteor/meteor';
 
 export default class Alert extends React.Component {
   render() {
@@ -13,3 +13,8 @@ export default class Alert extends React.Component {
     )
   }
 }
+
+Alert.propTypes = {
+  type: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+};
