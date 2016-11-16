@@ -9,6 +9,8 @@ import AccountsPage         from '/imports/ui/pages/AccountsPage'
 import AccountPage          from '/imports/ui/pages/AccountPage'
 import TransactionsPage     from '/imports/ui/pages/TransactionsPage'
 import Sidenav              from '/imports/ui/components/Sidenav'
+import AdminPage            from '/imports/ui/pages/admin/AdminPage'
+import AdminUsersPage       from '/imports/ui/pages/admin/AdminUsersPage'
 
 // HOME
 FlowRouter.route('/', {
@@ -19,6 +21,34 @@ FlowRouter.route('/', {
     });
   },
   name: "home"
+});
+
+var adminRoutes = FlowRouter.group({
+  prefix: '/admin',
+  name: 'admin',
+  triggersEnter: [redirectIfIsAdmin]
+});
+
+// handling /admin route
+adminRoutes.route('/', {
+  action: function() {
+    mount(MainLayout, {
+      pageName: "AdminPage",
+      pageComponent: <AdminPage />
+    });
+  },
+  triggersEnter: [redirectIfIsAdmin]
+});
+
+// Admin users list
+adminRoutes.route('/users', {
+  action: function() {
+    mount(MainLayout, {
+      pageName: "AdminUsersPage",
+      pageComponent: <AdminUsersPage />
+    });
+  },
+  triggersEnter: [redirectIfIsAdmin]
 });
 
 // TRANSACTIONS
@@ -98,6 +128,20 @@ function redirectIfIsLogin(context) {
   if (Meteor.userId()) {
     FlowRouter.go('/');
   }
+}
+
+function redirectIfIsAdmin() {
+  Tracker.autorun(() => {
+    const user = Meteor.user();
+    if (user) {
+      if (user.profile.admin) {
+        return true;
+      } else {
+        FlowRouter.go('/');
+        return false;
+      }
+    }
+  });
 }
 
 FlowRouter.triggers.enter([redirectIfIsNotLogin], {except: ["login", "register"]});

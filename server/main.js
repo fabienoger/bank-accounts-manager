@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import '/imports/api/user'
+import '/imports/api/users'
 import '/imports/api/accounts'
 import '/imports/api/transactions'
 
