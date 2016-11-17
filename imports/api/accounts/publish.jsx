@@ -11,6 +11,10 @@ Meteor.publish('accounts', () => {
   return BankAccounts.find({active: true});
 });
 
+Meteor.publish('allAccounts', () => {
+  return BankAccounts.find({});
+});
+
 Meteor.publish('userAccounts', (userId) => {
   return BankAccounts.find({createdBy: userId, active: true});
 });

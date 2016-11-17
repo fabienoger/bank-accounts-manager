@@ -4,6 +4,10 @@ Meteor.publish('transactions', () => {
   return Transactions.find({active: true});
 });
 
+Meteor.publish('allTransactions', () => {
+  return Transactions.find({});
+});
+
 Meteor.publish('accountTransactions', (accountId) => {
   if (!accountId) {
     throw new Meteor.Error("missing-param", "Missing accountId parameter !");

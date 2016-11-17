@@ -1,18 +1,20 @@
 import React                from 'react';
-import {Row, Col}           from 'react-bootstrap';
+import {Row, Col, Button}   from 'react-bootstrap';
 import TrackerReact         from 'meteor/ultimatejs:tracker-react';
 import UsersList            from '/imports/ui/components/users/UsersList';
-import UserDetails         from '/imports/ui/components/users/UserDetails';
+import UserDetails          from '/imports/ui/components/users/UserDetails';
+import UserModal            from '/imports/ui/components/users/UserModal';
 import Loading              from '/imports/ui/components/Loading';
 
 export default class AdminUsersPage extends TrackerReact(React.Component) {
   constructor(props) {
     super(props),
     this.state = {
-      accounts: Meteor.subscribe("accounts"),
-      transactions: Meteor.subscribe("transactions"),
-      users: Meteor.subscribe("users"),
-      selectedUser: null
+      accounts: Meteor.subscribe("allAccounts"),
+      transactions: Meteor.subscribe("allTransactions"),
+      users: Meteor.subscribe("allUsers"),
+      selectedUser: null,
+      userModal: false
     }
   }
 
@@ -23,7 +25,12 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
   }
 
   setSelectedUser(user) {
+    user = Meteor.users.findOne({_id: user._id});
     this.setState({selectedUser: user});
+  }
+
+  toggleUserModal() {
+    this.setState({userModal: !this.state.userModal});
   }
 
   render() {
@@ -41,8 +48,16 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
         </Col>
         <Col md={6}>
           {this.state.selectedUser ?
-            <UserDetails user={this.state.selectedUser} />
-          : ''}
+            <UserDetails user={this.state.selectedUser}
+              updateUser={this.setSelectedUser.bind(this)}
+              openUserModal={this.toggleUserModal.bind(this)} />
+          :
+            <Button bsStyle="primary" onClick={this.toggleUserModal.bind(this)} >New user</Button>
+          }
+          {this.state.userModal ?
+            <UserModal user={this.state.selectedUser} show={this.state.userModal}
+              closeUserModal={this.toggleUserModal.bind(this)} />
+          : '' }
         </Col>
       </Row>
     )
