@@ -10,6 +10,14 @@
   outline: none !important;
 }
 
+/* React Boostrap Modal */
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
+
 div.account-update, div.transaction-update {
   margin-bottom: 15px;
 }
