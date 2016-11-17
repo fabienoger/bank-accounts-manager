@@ -3,16 +3,24 @@ import BankAccount from './collection.jsx'
 
 // Check if Account already exists with the param name
 // If Account already exists return true
-function accountAlreadyExists(name) {
+function accountAlreadyExists(name, id) {
   if (!name) {
     throw new Meteor.Error("missing-param", "Missing name parameter !");
   }
-  const foundAccount = BankAccounts.findOne({
+  let find = {
     name: name,
-    createdBy: Meteor.userId(),
-    active: true
-  });
-  if (foundAccount) {
+    active: true,
+    createdBy: Meteor.userId()
+  };
+  let accountById = null;
+  if (id) {
+    accountById = BankAccount.findOne({_id: id});
+    if (accountById) {
+      find.createdBy = accountById.createdBy;
+    }
+  }
+  const foundAccount = BankAccounts.findOne(find);
+  if (foundAccount && foundAccount._id != id) {
     return true;
   }
   return false;
@@ -30,7 +38,7 @@ Meteor.methods({
       throw new Meteor.Error("user-required", "You must be connected !");
     }
     // Check if Account name exists
-    if (accountAlreadyExists(name)) {
+    if (accountAlreadyExists(name, '')) {
       throw new Meteor.Error("name-already-exists", "Name already exists !");
     }
 
@@ -56,7 +64,7 @@ Meteor.methods({
     }
     // Check if Account name exists
     if (doc.$set && doc.$set.name) {
-      if (accountAlreadyExists(doc.$set.name)) {
+      if (accountAlreadyExists(doc.$set.name, id)) {
         throw new Meteor.Error("name-already-exists", "Name already exists !");
       }
     }
