@@ -14,6 +14,7 @@ export default class RegisterForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({error: null});
     // Find the text field via the React ref
     const username = ReactDOM.findDOMNode(this.refs.username).value.trim();
     const email = ReactDOM.findDOMNode(this.refs.email).value.trim();

@@ -16,6 +16,10 @@ export default class AccountsAdd extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      error: null,
+      success: null
+    });
 
     // Find the text field via the React ref
     const name = ReactDOM.findDOMNode(this.refs.name).value.trim();
