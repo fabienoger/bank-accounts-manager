@@ -40,23 +40,24 @@ export default class UserDetails extends React.Component {
           }
         </div>
         <div className="panel-body">
-          <p><span className="label label-primary">Admin</span>&nbsp;
+          <p><Label bsStyle="primary">Id</Label> {user._id}</p>
+          <p><Label bsStyle="primary">Admin</Label>&nbsp;
             {user.profile.admin ?
               <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
             :
               <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
             }
           </p>
-          <p><span className="label label-primary">Email</span>&nbsp;{user.emails[0].address}</p>
-          <p><span className="label label-primary">Active</span>&nbsp;
+          <p><Label bsStyle="primary">Email</Label>&nbsp;{user.emails[0].address}</p>
+          <p><Label bsStyle="primary">Active</Label>&nbsp;
             {user.profile.active ?
               <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
             :
               <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
             }
           </p>
-          <p><span className="label label-primary">Language</span>&nbsp;{user.profile.language}</p>
-          <p><span className="label label-primary">Created At</span>&nbsp;
+          <p><Label bsStyle="primary">Language</Label>&nbsp;{user.profile.language}</p>
+          <p><Label bsStyle="primary">Created At</Label>&nbsp;
             <IntlProvider locale="en">
               <FormattedDate value={user.createdAt} />
             </IntlProvider>

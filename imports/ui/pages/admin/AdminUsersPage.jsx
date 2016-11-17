@@ -4,6 +4,7 @@ import TrackerReact         from 'meteor/ultimatejs:tracker-react';
 import UsersList            from '/imports/ui/components/users/UsersList';
 import UserDetails          from '/imports/ui/components/users/UserDetails';
 import UserModal            from '/imports/ui/components/users/UserModal';
+import FindUsers            from '/imports/ui/components/users/FindUsers';
 import Loading              from '/imports/ui/components/Loading';
 
 export default class AdminUsersPage extends TrackerReact(React.Component) {
@@ -14,7 +15,8 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
       transactions: Meteor.subscribe("allTransactions"),
       users: Meteor.subscribe("allUsers"),
       selectedUser: null,
-      userModal: false
+      userModal: false,
+      findUsers: false
     }
   }
 
@@ -33,6 +35,17 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
     this.setState({userModal: !this.state.userModal});
   }
 
+  findUsers(str) {
+    const users = Meteor.users.find({
+      $or: [
+        {_id: {$regex: str}},
+        {'profile.username': {$regex: str}},
+        {'emails.address': {$regex: str}}
+      ]
+    }).fetch();
+    this.setState({findUsers: users});
+  }
+
   render() {
     if (!this.state.accounts.ready() || !this.state.transactions.ready() || !this.state.users.ready()) {
       return (<Loading />)
@@ -40,9 +53,19 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
     if (!Meteor.user().profile.admin) {
       FlowRouter.go('/');
     }
-    const users = Meteor.users.find({}).fetch();
+    let users = [];
+    if (this.state.findUsers) {
+      users = this.state.findUsers;
+    } else {
+      users = Meteor.users.find({}).fetch();
+    }
     return (
       <Row className="admin-users-page">
+        <Col md={12}>
+          <Button bsStyle="primary" onClick={this.toggleUserModal.bind(this)} >New user</Button>
+          <FindUsers findUsers={this.findUsers.bind(this)} />
+          <div className="divider"></div>
+        </Col>
         <Col md={6}>
           <UsersList selectUser={this.setSelectedUser.bind(this)} users={users} />
         </Col>
@@ -51,9 +74,7 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
             <UserDetails user={this.state.selectedUser}
               updateUser={this.setSelectedUser.bind(this)}
               openUserModal={this.toggleUserModal.bind(this)} />
-          :
-            <Button bsStyle="primary" onClick={this.toggleUserModal.bind(this)} >New user</Button>
-          }
+          : ''}
           {this.state.userModal ?
             <UserModal user={this.state.selectedUser} show={this.state.userModal}
               closeUserModal={this.toggleUserModal.bind(this)} />

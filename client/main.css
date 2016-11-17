@@ -1,12 +1,12 @@
 
 /* Remove Bootstrap border-radius */
 .navbar, .dropdown, .dropdown-menu, .form-control, .btn, .list-group-item,
-.alert, .label, .modal-content, .panel, .panel-heading {
+.alert, .label, .modal-content, .panel, .panel-heading, .input-group-addon {
   border-radius: 0 !important;
 }
 
 /* Remove outline */
-.btn:focus {
+.btn:focus, .list-group-item {
   outline: none !important;
 }
 
@@ -16,6 +16,15 @@
 }
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  display: block;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
 }
 
 div.account-update, div.transaction-update {

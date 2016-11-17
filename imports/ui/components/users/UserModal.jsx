@@ -11,7 +11,7 @@ export default class UserModal extends React.Component {
           <Modal.Header closeButton>
             <Modal.Title>
               {this.props.user ?
-                'Update' + this.props.user.profile.username
+                'Update ' + this.props.user.profile.username
               : 'Add user'}
             </Modal.Title>
           </Modal.Header>
