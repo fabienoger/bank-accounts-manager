@@ -30,11 +30,15 @@ export default class AdminPage extends TrackerReact(React.Component) {
     const users = Meteor.users.find({}).fetch();
     return (
       <Row className="admin-page">
-        <Col md={6}>
+        <Col md={4}>
+          <div className="page-header"><a href="/admin/users">Users</a></div>
           <UsersList users={users} />
         </Col>
-        <Col md={6}>
-          Admin
+        <Col md={4}>
+          <div className="page-header"><a href="/admin/accounts">Accounts</a></div>
+        </Col>
+        <Col md={4}>
+          <div className="page-header"><a href="/admin/transactions">Transactions</a></div>
         </Col>
       </Row>
     )

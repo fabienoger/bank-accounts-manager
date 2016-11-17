@@ -11,6 +11,8 @@ import TransactionsPage     from '/imports/ui/pages/TransactionsPage'
 import Sidenav              from '/imports/ui/components/Sidenav'
 import AdminPage            from '/imports/ui/pages/admin/AdminPage'
 import AdminUsersPage       from '/imports/ui/pages/admin/AdminUsersPage'
+import AdminAccountsPage    from '/imports/ui/pages/admin/AdminAccountsPage'
+import AdminAccountPage    from '/imports/ui/pages/admin/AdminAccountPage'
 
 // HOME
 FlowRouter.route('/', {
@@ -49,6 +51,27 @@ adminRoutes.route('/users', {
     });
   },
   triggersEnter: [redirectIfIsAdmin]
+});
+
+// Admin accounts list
+adminRoutes.route('/accounts', {
+  action: function() {
+    mount(MainLayout, {
+      pageName: "AdminAccountsPage",
+      pageComponent: <AdminAccountsPage />
+    });
+  },
+  triggersEnter: [redirectIfIsAdmin]
+});
+
+adminRoutes.route('/accounts/:accountId', {
+  action: function (params, queryParams) {
+    mount(MainLayout, {
+      pageName: "account",
+      pageComponent: <AdminAccountPage accountId={params.accountId} />
+    });
+  },
+  name: "account"
 });
 
 // TRANSACTIONS

@@ -26,16 +26,20 @@ export default class AccountItem extends React.Component {
   }
 
   render() {
+    let createdBy = '';
+    if (this.props.admin) {
+      createdBy = Meteor.users.findOne({_id: this.props.account.createdBy})
+    }
     return (
       <ListGroupItem onClick={this.showDetails.bind(this)}>
-        {this.props.account.name}
+        {this.props.account.name} {this.props.admin ? ` - ${createdBy.profile.username}` : ''}
         <span className="badge">{this.props.account.balance} €</span>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.account.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Account account={this.props.account} />
+            <Account account={this.props.account} admin={this.props.admin} />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close.bind(this)}>Close</Button>
@@ -48,4 +52,5 @@ export default class AccountItem extends React.Component {
 
 AccountItem.propTypes = {
   account: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired
 };

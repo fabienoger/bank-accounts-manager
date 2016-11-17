@@ -34,7 +34,10 @@ export default class Account extends React.Component {
   render() {
     const createdBy = Meteor.users.findOne({_id: this.props.account.createdBy});
     const updatedBy = Meteor.users.findOne({_id: this.props.account.updatedBy});
-    const urlToAccount = `/accounts/${this.props.account._id}`;
+    let urlToAccount = `/accounts/${this.props.account._id}`;
+    if (this.props.admin) {
+      urlToAccount = `/admin/accounts/${this.props.account._id}`;
+    }
     return (
       <div className="account">
         {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
@@ -75,4 +78,5 @@ export default class Account extends React.Component {
 
 Account.propTypes = {
   account: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired
 };

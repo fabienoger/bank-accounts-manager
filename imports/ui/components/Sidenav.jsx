@@ -48,6 +48,8 @@ export default class Sidenav extends React.Component {
                 <NavDropdown eventKey={1} title="Admin" id="basic-nav-dropdown">
                   <MenuItem eventKey={1.1} href="/admin">Admin</MenuItem>
                   <MenuItem eventKey={1.2} href="/admin/users">Users</MenuItem>
+                  <MenuItem eventKey={1.3} href="/admin/accounts">Accounts</MenuItem>
+                  <MenuItem eventKey={1.4} href="/admin/transactions">Transactions</MenuItem>
                 </NavDropdown>
               : ''
             : ''

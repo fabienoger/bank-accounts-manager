@@ -11,8 +11,6 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
   constructor(props) {
     super(props),
     this.state = {
-      accounts: Meteor.subscribe("allAccounts"),
-      transactions: Meteor.subscribe("allTransactions"),
       users: Meteor.subscribe("allUsers"),
       selectedUser: null,
       userModal: false,
@@ -21,8 +19,6 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
   }
 
   componentWillUnmount() {
-    this.state.accounts.stop();
-    this.state.transactions.stop();
     this.state.users.stop();
   }
 
@@ -47,7 +43,7 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
   }
 
   render() {
-    if (!this.state.accounts.ready() || !this.state.transactions.ready() || !this.state.users.ready()) {
+    if (!this.state.users.ready()) {
       return (<Loading />)
     }
     if (!Meteor.user().profile.admin) {
