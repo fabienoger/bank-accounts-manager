@@ -1,8 +1,9 @@
 import React, {PropTypes}             from 'react';
 import ReactDOM                       from 'react-dom';
-import {ListGroupItem, Modal, Button} from 'react-bootstrap'
+import {Modal, Button, Label}         from 'react-bootstrap';
 import { Meteor }                     from 'meteor/meteor';
-import Account                        from '/imports/ui/components/accounts/Account'
+import Account                        from '/imports/ui/components/accounts/Account';
+import {FormattedDate, IntlProvider}  from 'react-intl';
 
 export default class AccountItem extends React.Component {
   constructor(props) {
@@ -31,9 +32,22 @@ export default class AccountItem extends React.Component {
       createdBy = Meteor.users.findOne({_id: this.props.account.createdBy})
     }
     return (
-      <ListGroupItem onClick={this.showDetails.bind(this)}>
-        {this.props.account.name} {this.props.admin ? ` - ${createdBy.profile.username}` : ''}
-        <span className="badge">{this.props.account.balance} €</span>
+      <li className="list-group-item" onClick={this.showDetails.bind(this)} style={{cursor: 'pointer'}}>
+        <h4 className="list-group-item-heading">{this.props.account.name} <span className="badge pull-right">{this.props.account.balance} €</span></h4>
+        <p className="list-group-item-text">
+          {this.props.admin ?
+            `${createdBy.profile.username}`
+          :
+            <IntlProvider locale="en">
+              <FormattedDate value={this.props.account.lastUpdate} />
+            </IntlProvider>
+          }
+          {this.props.account.active ?
+            <Label className="pull-right" bsStyle="success">Enabled</Label>
+          :
+            <Label className="pull-right" bsStyle="warning">Disabled</Label>
+          }
+        </p>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.account.name}</Modal.Title>
@@ -45,7 +59,7 @@ export default class AccountItem extends React.Component {
             <Button onClick={this.close.bind(this)}>Close</Button>
           </Modal.Footer>
         </Modal>
-      </ListGroupItem>
+      </li>
     )
   }
 }
