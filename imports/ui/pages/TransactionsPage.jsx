@@ -4,7 +4,7 @@ import TrackerReact         from 'meteor/ultimatejs:tracker-react'
 import Accounts             from '/imports/api/accounts/collection'
 import Transactions         from '/imports/api/transactions/collection'
 import TransactionsList     from '/imports/ui/components/transactions/TransactionsList'
-import TransactionsAdd      from '/imports/ui/components/transactions/TransactionsAdd'
+import TransactionForm      from '/imports/ui/components/transactions/TransactionForm'
 import Loading              from '/imports/ui/components/Loading'
 
 export default class TransactionsPage extends TrackerReact(React.Component) {
@@ -41,7 +41,7 @@ export default class TransactionsPage extends TrackerReact(React.Component) {
           <TransactionsList transactions={transactions} />
         </Col>
         <Col md={6}>
-          <TransactionsAdd accounts={accounts} />
+          <TransactionForm accounts={accounts} />
         </Col>
       </Row>
     )

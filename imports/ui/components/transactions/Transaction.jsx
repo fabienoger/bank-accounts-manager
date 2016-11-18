@@ -4,7 +4,7 @@ import {ListGroup, ListGroupItem, ButtonGroup, Button}  from 'react-bootstrap';
 import {FormattedDate, IntlProvider}                    from 'react-intl';
 import { Meteor }                                       from 'meteor/meteor';
 import Alert                                            from '/imports/ui/components/Alert';
-import TransactionUpdate                                from '/imports/ui/components/transactions/TransactionUpdate.jsx';
+import TransactionForm                                  from '/imports/ui/components/transactions/TransactionForm.jsx';
 
 export default class Transaction extends React.Component {
   constructor(props) {
@@ -47,6 +47,16 @@ export default class Transaction extends React.Component {
             </span>
           </ListGroupItem>
           <ListGroupItem href={accountLink} >Account : {this.props.account.name ? this.props.account.name : ''}</ListGroupItem>
+          <ListGroupItem>Checked :&nbsp;
+            {this.props.transaction.checked ?
+              <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            :
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            }
+          </ListGroupItem>
+          <ListGroupItem>
+            Category : {this.props.transaction.category}
+          </ListGroupItem>
           <ListGroupItem href={Meteor.user().profile.admin ? `/admin/users/${createdBy._id}` : `/users/${createdBy._id}`}>
             Created by : {createdBy ? createdBy.profile.username : ''}
           </ListGroupItem>
@@ -64,7 +74,7 @@ export default class Transaction extends React.Component {
             </IntlProvider>
           </ListGroupItem>
         </ListGroup>
-        {this.state.displayUpdate ? <TransactionUpdate transaction={this.props.transaction} /> : ''}
+        {this.state.displayUpdate ? <TransactionForm accountId={this.props.account._id} transaction={this.props.transaction} /> : ''}
         <div className="actions">
           <ButtonGroup>
             <Button bsStyle="primary" onClick={this.displayUpdate.bind(this)}>Update</Button>

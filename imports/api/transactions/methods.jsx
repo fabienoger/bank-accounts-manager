@@ -2,8 +2,8 @@ import {Meteor} from 'meteor/meteor'
 import Transactions from './collection.jsx'
 
 Meteor.methods({
-  createTransaction: (name, value, accountId) => {
-    if (!name || !value || !accountId) {
+  createTransaction: (name, value, category, checked, accountId) => {
+    if (!name || !value || !accountId || !category) {
       throw new Meteor.Error("fields-required", "All fields are required !");
     }
     if (isNaN(value) || value < 0) {
@@ -24,6 +24,8 @@ Meteor.methods({
       return Transactions.insert({
         name: name,
         value: parseFloat(value),
+        category: category,
+        checked: checked,
         accountId: accountId
       });
     });

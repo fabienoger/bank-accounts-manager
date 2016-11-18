@@ -5,7 +5,7 @@ import Accounts                 from '/imports/api/accounts/collection'
 import Transactions             from '/imports/api/transactions/collection'
 import AccountItem              from '/imports/ui/components/accounts/AccountItem';
 import AccountTransactionsList  from '/imports/ui/components/accounts/AccountTransactionsList'
-import TransactionsAdd          from '/imports/ui/components/transactions/TransactionsAdd'
+import TransactionForm          from '/imports/ui/components/transactions/TransactionForm'
 import Loading                  from '/imports/ui/components/Loading'
 
 export default class AdminAccountPage extends TrackerReact(React.Component) {
@@ -36,7 +36,7 @@ export default class AdminAccountPage extends TrackerReact(React.Component) {
         </Col>
         <Col md={6}>
           <AccountItem account={account} admin={true} />
-          <TransactionsAdd accountId={this.props.accountId} accounts={accounts} />
+          <TransactionForm accountId={this.props.accountId} accounts={accounts} />
         </Col>
       </Row>
     )

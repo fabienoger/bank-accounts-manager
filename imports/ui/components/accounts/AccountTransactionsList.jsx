@@ -3,7 +3,7 @@ import ReactDOM           from 'react-dom';
 import {ListGroup}        from 'react-bootstrap'
 import { Meteor }         from 'meteor/meteor';
 import TransactionItem    from '/imports/ui/components/transactions/TransactionItem'
-import TransactionsAdd    from '/imports/ui/components/transactions/TransactionsAdd'
+import TransactionForm    from '/imports/ui/components/transactions/TransactionForm'
 
 export default class AccountTransactionsList extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class AccountTransactionsList extends React.Component {
             })}
           </ListGroup>
         :
-          <TransactionsAdd accounts={[account]} />
+          <TransactionForm accounts={[account]} />
         }
       </div>
     )
