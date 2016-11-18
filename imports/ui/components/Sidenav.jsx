@@ -41,8 +41,10 @@ export default class Sidenav extends React.Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="/accounts">Accounts</NavItem>
-            <NavItem eventKey={2} href="/transactions">Transactions</NavItem>
+            {this.state.user ?
+              [<NavItem key={1} eventKey={1} href="/accounts">Accounts</NavItem>,
+              <NavItem key={2} eventKey={2} href="/transactions">Transactions</NavItem>]
+            : '' }
             {this.state.user ?
               this.state.user.profile.admin ?
                 <NavDropdown eventKey={1} title="Admin" id="basic-nav-dropdown">

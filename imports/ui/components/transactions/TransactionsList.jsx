@@ -14,11 +14,15 @@ export default class TransactionsList extends React.Component {
     let transactions = this.props.transactions;
     return (
       <Panel bsStyle="primary" className="transactions-list" collapsible defaultExpanded header="Transactions List">
-        <ListGroup fill>
-          {transactions.map((transaction) => {
-            return <TransactionItem key={transaction._id} transaction={transaction} />
-          })}
-        </ListGroup>
+        {transactions.length > 0 ?
+          <ListGroup fill>
+            {transactions.map((transaction) => {
+              return <TransactionItem key={transaction._id} transaction={transaction} />
+            })}
+          </ListGroup>
+        :
+          <Alert type="warning" message="No transactions found !" />
+        }
       </Panel>
     )
   }
