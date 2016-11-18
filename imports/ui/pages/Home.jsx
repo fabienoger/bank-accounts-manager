@@ -53,7 +53,7 @@ export default class Home extends TrackerReact(React.Component) {
             const transactions = Transactions.find({accountId: account._id}).fetch();
             return (
               <Col md={4} key={account._id}>
-                <AccountTransactionsList account={account} transactions={transactions} />
+                <AccountTransactionsList account={account} transactions={transactions} admin={false} />
               </Col>
             )
           })

@@ -15,7 +15,7 @@ export default class AccountTransactionsList extends React.Component {
     const transactions = this.props.transactions;
     const currentUser = Meteor.user();
     let accountLink = `/accounts/${account._id}`;
-    if (currentUser && currentUser.profile.admin) {
+    if (this.props.admin) {
       accountLink = `/admin/accounts/${account._id}`;
     }
     return (
@@ -43,4 +43,5 @@ export default class AccountTransactionsList extends React.Component {
 AccountTransactionsList.propTypes = {
   account: PropTypes.object.isRequired,
   transactions: PropTypes.array.isRequired,
+  admin: PropTypes.bool.isRequired
 };

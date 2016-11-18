@@ -32,7 +32,7 @@ export default class AdminAccountPage extends TrackerReact(React.Component) {
     return (
       <Row className="accounts-page">
         <Col md={6}>
-          <AccountTransactionsList account={account} transactions={transactions} />
+          <AccountTransactionsList account={account} transactions={transactions} admin={true} />
         </Col>
         <Col md={6}>
           <AccountItem account={account} admin={true} />

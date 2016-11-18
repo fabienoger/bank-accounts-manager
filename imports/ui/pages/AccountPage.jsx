@@ -31,7 +31,7 @@ export default class AccountPage extends TrackerReact(React.Component) {
     return (
       <Row className="accounts-page">
         <Col md={6}>
-          <AccountTransactionsList account={account} transactions={transactions} />
+          <AccountTransactionsList account={account} transactions={transactions} admin={false} />
         </Col>
         <Col md={6}>
           <TransactionsAdd accountId={this.props.accountId} accounts={accounts} />

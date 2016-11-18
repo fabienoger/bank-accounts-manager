@@ -1,7 +1,7 @@
-import React, {PropTypes}                         from 'react';
-import {Button, Label, ListGroup, ListGroupItem}  from 'react-bootstrap';
-import { Meteor }                                 from 'meteor/meteor';
-import {FormattedDate, IntlProvider}              from 'react-intl';
+import React, {PropTypes}             from 'react';
+import {Button, Label}                from 'react-bootstrap';
+import { Meteor }                     from 'meteor/meteor';
+import {FormattedDate, IntlProvider}  from 'react-intl';
 
 export default class UserDetails extends React.Component {
   constructor(props) {
