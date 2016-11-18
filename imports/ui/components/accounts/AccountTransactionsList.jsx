@@ -13,7 +13,6 @@ export default class AccountTransactionsList extends React.Component {
   render() {
     const account = this.props.account;
     const transactions = this.props.transactions;
-    const currentUser = Meteor.user();
     let accountLink = `/accounts/${account._id}`;
     if (this.props.admin) {
       accountLink = `/admin/accounts/${account._id}`;

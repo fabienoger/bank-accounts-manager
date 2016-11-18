@@ -49,7 +49,6 @@ export default class Home extends TrackerReact(React.Component) {
       <Row id="home">
         {accounts.length > 0 ?
           accounts.map((account) => {
-            const sub = Meteor.subscribe("accountTransactions", account._id)
             const transactions = Transactions.find({accountId: account._id}).fetch();
             return (
               <Col md={4} key={account._id}>
