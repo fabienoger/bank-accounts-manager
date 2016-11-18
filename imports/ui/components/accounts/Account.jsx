@@ -50,13 +50,17 @@ export default class Account extends React.Component {
               &nbsp;<span className="badge">€</span>
             </span>
           </ListGroupItem>
-          <ListGroupItem>Created by : {createdBy ? createdBy.profile.username : ''}</ListGroupItem>
+          <ListGroupItem href={this.props.admin ? `/admin/users/${createdBy._id}` : `/users/${createdBy._id}`}>
+            Created by : {createdBy ? createdBy.profile.username : ''}
+          </ListGroupItem>
           <ListGroupItem>Created at :&nbsp;
             <IntlProvider locale="en">
               <FormattedDate value={this.props.account.createdAt} />
             </IntlProvider>
           </ListGroupItem>
-          <ListGroupItem>Updated by : {updatedBy ? updatedBy.profile.username : ''}</ListGroupItem>
+          <ListGroupItem href={this.props.admin ? `/admin/users/${updatedBy._id}` : `/users/${updatedBy._id}`}>
+            Updated by : {updatedBy ? updatedBy.profile.username : ''}
+          </ListGroupItem>
           <ListGroupItem>Last update at :&nbsp;
             <IntlProvider locale="en">
               <FormattedDate value={this.props.account.lastUpdate} />

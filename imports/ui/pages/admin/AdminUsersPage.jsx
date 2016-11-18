@@ -67,7 +67,7 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
         </Col>
         <Col md={6}>
           {this.state.selectedUser ?
-            <UserDetails user={this.state.selectedUser}
+            <UserDetails user={this.state.selectedUser} admin={true}
               updateUser={this.setSelectedUser.bind(this)}
               openUserModal={this.toggleUserModal.bind(this)} />
           : ''}

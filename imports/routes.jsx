@@ -4,6 +4,7 @@ import MainLayout           from '/imports/ui/layouts/MainLayout'
 import Home                 from '/imports/ui/pages/Home'
 import Login                from '/imports/ui/pages/Login'
 import Register             from '/imports/ui/pages/Register'
+import ProfilePage          from '/imports/ui/pages/ProfilePage'
 import UserPage             from '/imports/ui/pages/UserPage'
 import AccountsPage         from '/imports/ui/pages/AccountsPage'
 import AccountPage          from '/imports/ui/pages/AccountPage'
@@ -12,7 +13,7 @@ import Sidenav              from '/imports/ui/components/Sidenav'
 import AdminPage            from '/imports/ui/pages/admin/AdminPage'
 import AdminUsersPage       from '/imports/ui/pages/admin/AdminUsersPage'
 import AdminAccountsPage    from '/imports/ui/pages/admin/AdminAccountsPage'
-import AdminAccountPage    from '/imports/ui/pages/admin/AdminAccountPage'
+import AdminAccountPage     from '/imports/ui/pages/admin/AdminAccountPage'
 
 // HOME
 FlowRouter.route('/', {
@@ -48,6 +49,17 @@ adminRoutes.route('/users', {
     mount(MainLayout, {
       pageName: "AdminUsersPage",
       pageComponent: <AdminUsersPage />
+    });
+  },
+  triggersEnter: [redirectIfIsAdmin]
+});
+
+// Admin user page
+adminRoutes.route('/users/:userId', {
+  action: function(params) {
+    mount(MainLayout, {
+      pageName: "UserPage",
+      pageComponent: <UserPage userId={params.userId} admin={true} />
     });
   },
   triggersEnter: [redirectIfIsAdmin]
@@ -107,14 +119,25 @@ FlowRouter.route('/accounts/:accountId', {
 });
 
 // USER
-FlowRouter.route('/user', {
+FlowRouter.route('/profile', {
   action: function (params, queryParams) {
     mount(MainLayout, {
-      pageName: "user",
-      pageComponent: <UserPage />
+      pageName: "profile",
+      pageComponent: <ProfilePage />
     });
   },
-  name: "user"
+  name: "profile"
+});
+
+// User page
+FlowRouter.route('/users/:userId', {
+  action: function(params) {
+    mount(MainLayout, {
+      pageName: "UserPage",
+      pageComponent: <UserPage userId={params.userId} admin={false} />
+    });
+  },
+  name: 'userPage'
 });
 
 // LOGIN

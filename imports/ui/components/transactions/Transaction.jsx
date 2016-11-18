@@ -47,13 +47,17 @@ export default class Transaction extends React.Component {
             </span>
           </ListGroupItem>
           <ListGroupItem href={accountLink} >Account : {this.props.account.name ? this.props.account.name : ''}</ListGroupItem>
-          <ListGroupItem>Created by : {createdBy ? createdBy.profile.username : ''}</ListGroupItem>
+          <ListGroupItem href={Meteor.user().profile.admin ? `/admin/users/${createdBy._id}` : `/users/${createdBy._id}`}>
+            Created by : {createdBy ? createdBy.profile.username : ''}
+          </ListGroupItem>
           <ListGroupItem>Created at :&nbsp;
             <IntlProvider locale="en">
               <FormattedDate value={this.props.transaction.createdAt} />
             </IntlProvider>
           </ListGroupItem>
-          <ListGroupItem>Updated by : {updatedBy ? updatedBy.profile.username : ''}</ListGroupItem>
+          <ListGroupItem href={Meteor.user().profile.admin ? `/admin/users/${updatedBy._id}` : `/users/${updatedBy._id}`}>
+            Updated by : {updatedBy ? updatedBy.profile.username : ''}
+          </ListGroupItem>
           <ListGroupItem>Last update at :&nbsp;
             <IntlProvider locale="en">
               <FormattedDate value={this.props.transaction.lastUpdate} />

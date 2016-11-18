@@ -63,14 +63,16 @@ export default class UserDetails extends React.Component {
             </IntlProvider>
           </p>
         </div>
-        <div className="panel-footer">
-          <Button bsStyle="success" onClick={this.props.openUserModal.bind(this)} >Update</Button>
-          {user.profile.active ?
-            <Button bsStyle="danger" onClick={this.removeUser.bind(this)} >Disable</Button>
-          :
-            <Button bsStyle="primary" onClick={this.activeUser.bind(this)} >Enable</Button>
-          }
-        </div>
+        {this.props.admin ?
+          <div className="panel-footer">
+            <Button bsStyle="success" onClick={this.props.openUserModal.bind(this)} >Update</Button>,
+            {user.profile.active ?
+              <Button bsStyle="danger" onClick={this.removeUser.bind(this)} >Disable</Button>
+              :
+              <Button bsStyle="primary" onClick={this.activeUser.bind(this)} >Enable</Button>
+            }
+          </div>
+        : ''}
       </div>
 
     )
@@ -79,4 +81,5 @@ export default class UserDetails extends React.Component {
 
 UserDetails.propTypes = {
   user: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired
 };

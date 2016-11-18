@@ -60,7 +60,7 @@ export default class Sidenav extends React.Component {
           <Nav pullRight>
             <NavDropdown eventKey={2} title={this.state.user ? this.state.user.profile.username : 'Login'} id="basic-nav-dropdown">
               {this.state.user ?
-                <MenuItem eventKey={2.1} href="/user">Profile</MenuItem> :
+                <MenuItem eventKey={2.1} href="/profile">Profile</MenuItem> :
                 <MenuItem eventKey={2.1} href="/login">Sign In</MenuItem>
               }
               <MenuItem divider />
