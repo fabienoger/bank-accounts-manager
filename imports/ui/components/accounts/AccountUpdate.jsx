@@ -63,8 +63,9 @@ export default class AccountUpdate extends React.Component {
 
   render() {
     return (
-      <div className="account-update">
-        <form onSubmit={this.handleSubmit.bind(this)}>
+      <form className="account-update panel panel-primary" onSubmit={this.handleSubmit.bind(this)}>
+        <div className="panel-heading">Update {this.props.account.name}</div>
+        <div className="panel-body">
           {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
           {this.state.success ? <Alert message={this.state.success} type="success" /> : ''}
           <div className="form-group">
@@ -78,9 +79,11 @@ export default class AccountUpdate extends React.Component {
               id="balance" placeholder="Account balance"
               value={this.state.balance} onChange={this.balanceChange.bind(this)} />
           </div>
+        </div>
+        <div className="panel-footer">
           <button type="submit" className="btn btn-success">Save</button>
-        </form>
-      </div>
+        </div>
+      </form>
     )
   }
 }

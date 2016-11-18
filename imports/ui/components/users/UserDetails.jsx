@@ -1,5 +1,5 @@
 import React, {PropTypes}             from 'react';
-import {Button, Label}                from 'react-bootstrap';
+import {ButtonGroup, Button, Label}   from 'react-bootstrap';
 import { Meteor }                     from 'meteor/meteor';
 import {FormattedDate, IntlProvider}  from 'react-intl';
 
@@ -65,12 +65,15 @@ export default class UserDetails extends React.Component {
         </div>
         {this.props.admin ?
           <div className="panel-footer">
-            <Button bsStyle="success" onClick={this.props.openUserModal.bind(this)} >Update</Button>,
-            {user.profile.active ?
-              <Button bsStyle="danger" onClick={this.removeUser.bind(this)} >Disable</Button>
-              :
-              <Button bsStyle="primary" onClick={this.activeUser.bind(this)} >Enable</Button>
-            }
+            <ButtonGroup>
+              <Button bsStyle="primary" href={this.props.admin ? `/admin/users/${user._id}` : `/users/${user._id}`} >Show</Button>
+              <Button bsStyle="success" onClick={this.props.openUserModal.bind(this)} >Update</Button>
+              {user.profile.active ?
+                <Button bsStyle="danger" onClick={this.removeUser.bind(this)} >Disable</Button>
+                :
+                <Button bsStyle="primary" onClick={this.activeUser.bind(this)} >Enable</Button>
+              }
+            </ButtonGroup>
           </div>
         : ''}
       </div>
