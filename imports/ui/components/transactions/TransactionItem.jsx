@@ -1,23 +1,18 @@
 import React, {PropTypes}             from 'react';
 import ReactDOM                       from 'react-dom';
-import {ListGroupItem, Modal, Button} from 'react-bootstrap'
+import {Label, Modal, Button}         from 'react-bootstrap';
 import { Meteor }                     from 'meteor/meteor';
-import TrackerReact                   from 'meteor/ultimatejs:tracker-react'
-import Transaction                    from '/imports/ui/components/transactions/Transaction'
-import Loading                        from '/imports/ui/components/Loading'
-import Accounts                       from '/imports/api/accounts/collection'
+import Transaction                    from '/imports/ui/components/transactions/Transaction';
+import Loading                        from '/imports/ui/components/Loading';
+import Accounts                       from '/imports/api/accounts/collection';
+import {FormattedDate, IntlProvider}  from 'react-intl';
 
-export default class TransactionItem extends TrackerReact(React.Component) {
+export default class TransactionItem extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showModal: false,
-      account: Meteor.subscribe("account", Meteor.userId(), this.props.transaction.accountId)
+      showModal: false
     }
-  }
-
-  componentWillUnmount() {
-    this.state.account.stop();
   }
 
   close() {
@@ -35,20 +30,35 @@ export default class TransactionItem extends TrackerReact(React.Component) {
 
   render() {
     const account = Accounts.findOne({_id: this.props.transaction.accountId});
+    let createdBy = '';
+    if (this.props.admin) {
+      createdBy = Meteor.users.findOne({_id: this.props.transaction.createdBy})
+    }
     return (
-      <ListGroupItem onClick={this.showDetails.bind(this)}>
-        {account ?
-          <span className="label label-success">{account.name}</span>
-        : <Loading />}
-        &nbsp;{this.props.transaction.name}
-        <span className="badge">{this.props.transaction.value} €</span>
+      <li className="list-group-item" onClick={this.showDetails.bind(this)} style={{cursor: 'pointer'}}>
+        <h4 className="list-group-item-heading">
+          {account ?
+            <span className="label label-success">{account.name}</span>
+          : <Loading />}
+        </h4>
+        <p className="list-group-item-text">
+          {this.props.transaction.name} -&nbsp;
+          {this.props.admin ?
+            `${createdBy.profile.username}`
+          :
+            <IntlProvider locale="en">
+              <FormattedDate value={this.props.transaction.lastUpdate} />
+            </IntlProvider>
+          }
+          <span className="badge pull-right">{this.props.transaction.value} €</span>
+        </p>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.transaction.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           {account ?
-            <Transaction transaction={this.props.transaction} account={account} /> :
+            <Transaction transaction={this.props.transaction} account={account} admin={this.props.admin} /> :
             <Loading />
           }
           </Modal.Body>
@@ -56,11 +66,12 @@ export default class TransactionItem extends TrackerReact(React.Component) {
             <Button onClick={this.close.bind(this)}>Close</Button>
           </Modal.Footer>
         </Modal>
-      </ListGroupItem>
+      </li>
     )
   }
 }
 
 TransactionItem.propTypes = {
   transaction: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired
 };

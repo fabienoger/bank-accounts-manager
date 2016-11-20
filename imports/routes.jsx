@@ -1,19 +1,20 @@
-import React                from 'react';
-import {mount}              from 'react-mounter';
-import MainLayout           from '/imports/ui/layouts/MainLayout'
-import Home                 from '/imports/ui/pages/Home'
-import Login                from '/imports/ui/pages/Login'
-import Register             from '/imports/ui/pages/Register'
-import ProfilePage          from '/imports/ui/pages/ProfilePage'
-import UserPage             from '/imports/ui/pages/UserPage'
-import AccountsPage         from '/imports/ui/pages/AccountsPage'
-import AccountPage          from '/imports/ui/pages/AccountPage'
-import TransactionsPage     from '/imports/ui/pages/TransactionsPage'
-import Sidenav              from '/imports/ui/components/Sidenav'
-import AdminPage            from '/imports/ui/pages/admin/AdminPage'
-import AdminUsersPage       from '/imports/ui/pages/admin/AdminUsersPage'
-import AdminAccountsPage    from '/imports/ui/pages/admin/AdminAccountsPage'
-import AdminAccountPage     from '/imports/ui/pages/admin/AdminAccountPage'
+import React                  from 'react';
+import {mount}                from 'react-mounter';
+import MainLayout             from '/imports/ui/layouts/MainLayout';
+import Home                   from '/imports/ui/pages/Home';
+import Login                  from '/imports/ui/pages/Login';
+import Register               from '/imports/ui/pages/Register';
+import ProfilePage            from '/imports/ui/pages/ProfilePage';
+import UserPage               from '/imports/ui/pages/UserPage';
+import AccountsPage           from '/imports/ui/pages/AccountsPage';
+import AccountPage            from '/imports/ui/pages/AccountPage';
+import TransactionsPage       from '/imports/ui/pages/TransactionsPage';
+import Sidenav                from '/imports/ui/components/Sidenav';
+import AdminPage              from '/imports/ui/pages/admin/AdminPage';
+import AdminUsersPage         from '/imports/ui/pages/admin/AdminUsersPage';
+import AdminAccountsPage      from '/imports/ui/pages/admin/AdminAccountsPage';
+import AdminAccountPage       from '/imports/ui/pages/admin/AdminAccountPage';
+import AdminTransactionsPage  from '/imports/ui/pages/admin/AdminTransactionsPage';
 
 // HOME
 FlowRouter.route('/', {
@@ -84,6 +85,17 @@ adminRoutes.route('/accounts/:accountId', {
     });
   },
   name: "account"
+});
+
+// Admin transactions page
+adminRoutes.route('/transactions', {
+  action: function() {
+    mount(MainLayout, {
+      pageName: "AdminTransactionsPage",
+      pageComponent: <AdminTransactionsPage />
+    });
+  },
+  triggersEnter: [redirectIfIsAdmin]
 });
 
 // TRANSACTIONS

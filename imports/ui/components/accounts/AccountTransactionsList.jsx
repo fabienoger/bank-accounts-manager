@@ -29,7 +29,7 @@ export default class AccountTransactionsList extends React.Component {
         {transactions.length > 0 ?
           <ListGroup>
             {transactions.map((transaction) => {
-              return <TransactionItem key={transaction._id} transaction={transaction} />
+              return <TransactionItem key={transaction._id} transaction={transaction} admin={this.props.admin} />
             })}
           </ListGroup>
         :

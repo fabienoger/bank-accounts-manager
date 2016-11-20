@@ -17,7 +17,7 @@ export default class TransactionsList extends React.Component {
         {transactions.length > 0 ?
           <ListGroup fill>
             {transactions.map((transaction) => {
-              return <TransactionItem key={transaction._id} transaction={transaction} />
+              return <TransactionItem key={transaction._id} transaction={transaction} admin={this.props.admin} />
             })}
           </ListGroup>
         :
@@ -30,4 +30,5 @@ export default class TransactionsList extends React.Component {
 
 TransactionsList.propTypes = {
   transactions: PropTypes.array.isRequired,
+  admin: PropTypes.bool.isRequired
 };

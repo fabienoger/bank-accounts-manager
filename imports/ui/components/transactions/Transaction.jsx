@@ -34,7 +34,10 @@ export default class Transaction extends React.Component {
   render() {
     const createdBy = Meteor.users.findOne({_id: this.props.transaction.createdBy});
     const updatedBy = Meteor.users.findOne({_id: this.props.transaction.updatedBy});
-    const accountLink = `/accounts/${this.props.account._id}`
+    let accountLink = `/accounts/${this.props.account._id}`
+    if (this.props.admin) {
+      accountLink = `/admin/accounts/${this.props.account._id}`
+    }
     return (
       <div className="transaction">
         {this.state.error ? <Alert message={this.state.error} type="danger" /> : ''}
@@ -88,5 +91,6 @@ export default class Transaction extends React.Component {
 
 Transaction.propTypes = {
   transaction: PropTypes.object.isRequired,
-  account: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired
 };

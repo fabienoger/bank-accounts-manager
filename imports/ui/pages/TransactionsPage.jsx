@@ -38,7 +38,7 @@ export default class TransactionsPage extends TrackerReact(React.Component) {
     return (
       <Row className="transactions-page">
         <Col md={6}>
-          <TransactionsList transactions={transactions} />
+          <TransactionsList transactions={transactions} admin={false} />
         </Col>
         <Col md={6}>
           <TransactionForm accounts={accounts} />
