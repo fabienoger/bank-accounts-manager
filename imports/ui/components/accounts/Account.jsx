@@ -4,7 +4,7 @@ import {ListGroup, ListGroupItem, ButtonGroup, Button}  from 'react-bootstrap';
 import {FormattedDate, IntlProvider}                    from 'react-intl';
 import { Meteor }                                       from 'meteor/meteor';
 import Alert                                            from '/imports/ui/components/Alert';
-import AccountUpdate                                    from '/imports/ui/components/accounts/AccountUpdate.jsx';
+import AccountForm                                      from '/imports/ui/components/accounts/AccountForm';
 
 export default class Account extends React.Component {
   constructor(props) {
@@ -67,7 +67,7 @@ export default class Account extends React.Component {
             </IntlProvider>
           </ListGroupItem>
         </ListGroup>
-        {this.state.displayUpdate ? <AccountUpdate account={this.props.account} /> : ''}
+        {this.state.displayUpdate ? <AccountForm account={this.props.account} /> : ''}
         <div className="actions">
           <ButtonGroup>
             <Button href={urlToAccount} bsStyle="info">Details</Button>

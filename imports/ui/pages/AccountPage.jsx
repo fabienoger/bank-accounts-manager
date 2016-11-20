@@ -3,7 +3,7 @@ import {Row, Col}               from 'react-bootstrap'
 import TrackerReact             from 'meteor/ultimatejs:tracker-react'
 import Accounts                 from '/imports/api/accounts/collection'
 import Transactions             from '/imports/api/transactions/collection'
-import AccountUpdate            from '/imports/ui/components/accounts/AccountUpdate'
+import AccountForm              from '/imports/ui/components/accounts/AccountForm'
 import AccountTransactionsList  from '/imports/ui/components/accounts/AccountTransactionsList'
 import TransactionForm          from '/imports/ui/components/transactions/TransactionForm'
 import Loading                  from '/imports/ui/components/Loading'
@@ -35,7 +35,7 @@ export default class AccountPage extends TrackerReact(React.Component) {
           <AccountTransactionsList account={account} transactions={transactions} admin={false} />
         </Col>
         <Col md={6}>
-          <AccountUpdate account={account} />
+          <AccountForm account={account} />
           <TransactionForm accountId={this.props.accountId} accounts={accounts} />
         </Col>
       </Row>

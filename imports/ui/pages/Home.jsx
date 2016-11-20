@@ -6,7 +6,7 @@ import Accounts                 from '/imports/api/accounts/collection'
 import Transactions             from '/imports/api/transactions/collection'
 import Loading                  from '/imports/ui/components/Loading'
 import AccountTransactionsList  from '/imports/ui/components/accounts/AccountTransactionsList'
-import AccountsAdd              from '/imports/ui/components/accounts/AccountsAdd'
+import AccountForm              from '/imports/ui/components/accounts/AccountForm'
 import TransactionForm          from '/imports/ui/components/transactions/TransactionForm'
 
 
@@ -37,7 +37,7 @@ export default class Home extends TrackerReact(React.Component) {
       return (
         <Row id="home">
           <Col md={6}>
-            <AccountsAdd />
+            <AccountForm />
           </Col>
           <Col md={6}>
             <TransactionForm accounts={accounts} />

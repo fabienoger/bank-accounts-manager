@@ -2,7 +2,7 @@ import React                from 'react';
 import {Row, Col}           from 'react-bootstrap';
 import TrackerReact         from 'meteor/ultimatejs:tracker-react';
 import AccountsList         from '/imports/ui/components/accounts/AccountsList';
-import AccountsAdd          from '/imports/ui/components/accounts/AccountsAdd';
+import AccountForm          from '/imports/ui/components/accounts/AccountForm';
 import Accounts             from '/imports/api/accounts/collection';
 import Loading              from '/imports/ui/components/Loading';
 
@@ -29,7 +29,7 @@ export default class AccountsPage extends TrackerReact(React.Component) {
           <AccountsList accounts={accounts} admin={false} />
         </Col>
         <Col md={6}>
-          <AccountsAdd />
+          <AccountForm />
         </Col>
       </Row>
     )
