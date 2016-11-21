@@ -18,7 +18,7 @@ Meteor.methods({
     };
     Meteor.call("updateAccount", foundAccount._id, doc, function(err, result) {
       if (err) {
-        console.error("updateAccount", err);
+        return console.error("updateAccount", err);
       }
 
       return Transactions.insert({

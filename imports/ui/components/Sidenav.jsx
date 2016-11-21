@@ -43,30 +43,32 @@ export default class Sidenav extends React.Component {
           <Nav>
             {this.state.user ?
               [<NavItem key={1} eventKey={1} href="/accounts">Accounts</NavItem>,
-              <NavItem key={2} eventKey={2} href="/transactions">Transactions</NavItem>]
+              <NavItem key={2} eventKey={2} href="/transactions">Transactions</NavItem>,
+              <NavItem key={3} eventKey={3} href="/transfers">Transfers</NavItem>]
             : '' }
             {this.state.user ?
               this.state.user.profile.admin ?
-                <NavDropdown eventKey={1} title="Admin" id="basic-nav-dropdown">
-                  <MenuItem eventKey={1.1} href="/admin">Admin</MenuItem>
-                  <MenuItem eventKey={1.2} href="/admin/users">Users</MenuItem>
-                  <MenuItem eventKey={1.3} href="/admin/accounts">Accounts</MenuItem>
-                  <MenuItem eventKey={1.4} href="/admin/transactions">Transactions</MenuItem>
+                <NavDropdown eventKey={4} title="Admin" id="basic-nav-dropdown">
+                  <MenuItem eventKey={4.1} href="/admin">Admin</MenuItem>
+                  <MenuItem eventKey={4.2} href="/admin/users">Users</MenuItem>
+                  <MenuItem eventKey={4.3} href="/admin/accounts">Accounts</MenuItem>
+                  <MenuItem eventKey={4.4} href="/admin/transactions">Transactions</MenuItem>
+                  <MenuItem eventKey={4.5} href="/admin/transfers">Transfers</MenuItem>
                 </NavDropdown>
               : ''
             : ''
             }
           </Nav>
           <Nav pullRight>
-            <NavDropdown eventKey={2} title={this.state.user ? this.state.user.profile.username : 'Login'} id="basic-nav-dropdown">
+            <NavDropdown eventKey={5} title={this.state.user ? this.state.user.profile.username : 'Login'} id="basic-nav-dropdown">
               {this.state.user ?
-                <MenuItem eventKey={2.1} href="/profile">Profile</MenuItem> :
-                <MenuItem eventKey={2.1} href="/login">Sign In</MenuItem>
+                <MenuItem eventKey={5.1} href="/profile">Profile</MenuItem> :
+                <MenuItem eventKey={5.1} href="/login">Sign In</MenuItem>
               }
               <MenuItem divider />
               {this.state.user ?
-                <MenuItem eventKey={2.2} onClick={() => this.logout()}>Sign Out</MenuItem> :
-                <MenuItem eventKey={2.2} href="/register">Sign Up</MenuItem>
+                <MenuItem eventKey={5.2} onClick={() => this.logout()}>Sign Out</MenuItem> :
+                <MenuItem eventKey={5.2} href="/register">Sign Up</MenuItem>
               }
             </NavDropdown>
           </Nav>

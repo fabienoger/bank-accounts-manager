@@ -9,6 +9,7 @@ import UserPage               from '/imports/ui/pages/UserPage';
 import AccountsPage           from '/imports/ui/pages/AccountsPage';
 import AccountPage            from '/imports/ui/pages/AccountPage';
 import TransactionsPage       from '/imports/ui/pages/TransactionsPage';
+import TransfersPage          from '/imports/ui/pages/TransfersPage';
 import Sidenav                from '/imports/ui/components/Sidenav';
 import AdminPage              from '/imports/ui/pages/admin/AdminPage';
 import AdminUsersPage         from '/imports/ui/pages/admin/AdminUsersPage';
@@ -96,6 +97,17 @@ adminRoutes.route('/transactions', {
     });
   },
   triggersEnter: [redirectIfIsAdmin]
+});
+
+// TRANSFERS
+FlowRouter.route('/transfers', {
+  action: function (params, queryParams) {
+    mount(MainLayout, {
+      pageName: "transfers",
+      pageComponent: <TransfersPage admin={false} />
+    });
+  },
+  name: "transfers"
 });
 
 // TRANSACTIONS
