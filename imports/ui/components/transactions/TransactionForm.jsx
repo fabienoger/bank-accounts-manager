@@ -31,7 +31,7 @@ export default class TransactionForm extends React.Component {
     this.setState({category: e.target.value.trim()});
   }
   accountChange(e) {
-    this.setState({account: e.target.value.trim()});
+    this.setState({accountId: e.target.value.trim()});
   }
 
   handleSubmit(event) {
@@ -80,7 +80,10 @@ export default class TransactionForm extends React.Component {
         ReactDOM.findDOMNode(this.refs.checked).cheked = false;
       });
     } else {
-      const accountId = ReactDOM.findDOMNode(this.refs.accountSelect).value.trim();
+      const accountId = this.state.accountId;
+      if (!accountId) {
+        return this.setState({error: "Select an account !"});
+      }
       Meteor.call("createTransaction", name, value, category, checked, accountId, (err, result) => {
         if (err) {
           console.error("createTransaction ", err);
@@ -108,6 +111,8 @@ export default class TransactionForm extends React.Component {
     }
     if (this.props.accountId) {
       this.setState({accountId: this.props.accountId})
+    } else {
+      this.setState({accountId: this.props.accounts[0]._id})
     }
   }
 
