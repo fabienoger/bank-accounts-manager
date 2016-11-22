@@ -67,7 +67,7 @@ export default class UserDetails extends React.Component {
           <div className="panel-footer">
             <ButtonGroup>
               <Button bsStyle="primary" href={this.props.admin ? `/admin/users/${user._id}` : `/users/${user._id}`} >Show</Button>
-              <Button bsStyle="success" onClick={this.props.openUserModal.bind(this)} >Update</Button>
+              {this.props.openUserModal && <Button bsStyle="success" onClick={this.props.openUserModal.bind(this)} >Update</Button>}
               {user.profile.active ?
                 <Button bsStyle="danger" onClick={this.removeUser.bind(this)} >Disable</Button>
                 :
@@ -77,7 +77,6 @@ export default class UserDetails extends React.Component {
           </div>
         : ''}
       </div>
-
     )
   }
 }
