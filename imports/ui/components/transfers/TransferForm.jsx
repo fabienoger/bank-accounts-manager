@@ -89,14 +89,9 @@ export default class TransferForm extends React.Component {
       Meteor.call("updateTransfer", this.props.transfer._id, doc, (err, result) => {
         if (err) {
           console.error("updateTransfer ", err);
-          this.setState({error: err.reason});
-          return;
+          return this.setState({error: err.reason});
         }
         this.setState({success: "Transfer has been updated !"});
-        // Clear form
-        ReactDOM.findDOMNode(this.refs.name).value = '';
-        ReactDOM.findDOMNode(this.refs.value).value = 0;
-        ReactDOM.findDOMNode(this.refs.checked).cheked = false;
       });
     } else {
       Meteor.call("createTransfer", name, value, checked, fromAccountId, toAccountId, (err, result) => {
@@ -104,11 +99,12 @@ export default class TransferForm extends React.Component {
           console.error("createTransfer ", err);
           return this.setState({error: err.reason});
         }
-        this.setState({success: "Transfer has been created !"});
-        // Clear form
-        ReactDOM.findDOMNode(this.refs.name).value = '';
-        ReactDOM.findDOMNode(this.refs.value).value = 0;
-        ReactDOM.findDOMNode(this.refs.checked).cheked = false;
+        this.setState({
+          success: "Transfer has been created !",
+          name: '',
+          value: 0,
+          checked: false
+        });
       });
     }
 

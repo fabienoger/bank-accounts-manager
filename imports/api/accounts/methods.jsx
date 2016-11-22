@@ -90,11 +90,9 @@ Meteor.methods({
     const toAccountDoc = {
       $inc: {balance: parseFloat(transfer.value)}
     };
-    BankAccounts.update({_id: transfer.fromAccountId}, fromAccountDoc, (err, result) => {
-      if (err) {
-        return err;
-      }
+    const fromAccountResult = BankAccounts.update({_id: transfer.fromAccountId}, fromAccountDoc);
+    if (fromAccountResult == 1) {
       return BankAccounts.update({_id: transfer.toAccountId}, toAccountDoc);
-    });
+    }
   }
 });

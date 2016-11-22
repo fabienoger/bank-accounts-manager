@@ -30,7 +30,7 @@ export default class TransfersPage extends TrackerReact(React.Component) {
     return (
       <Row className="transfers-page">
         <Col md={6}>
-          <TransfersList transfers={transfers} admin={false} />
+          <TransfersList transfers={transfers} accounts={accounts} admin={false} />
         </Col>
         <Col md={6}>
           <TransferForm accounts={accounts} />

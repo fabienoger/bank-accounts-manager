@@ -17,7 +17,7 @@ export default class TransfersList extends React.Component {
         {transfers.length > 0 ?
           <ListGroup fill>
             {transfers.map((transfer) => {
-              return <TransferItem key={transfer._id} transfer={transfer} admin={this.props.admin} />
+              return <TransferItem key={transfer._id} transfer={transfer} accounts={this.props.accounts} admin={this.props.admin} />
             })}
           </ListGroup>
         :
@@ -30,5 +30,6 @@ export default class TransfersList extends React.Component {
 
 TransfersList.propTypes = {
   transfers: PropTypes.array.isRequired,
+  accounts: PropTypes.array.isRequired,
   admin: PropTypes.bool.isRequired
 };

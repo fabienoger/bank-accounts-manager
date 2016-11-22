@@ -19,20 +19,16 @@ Transfers.before.update((userId, doc, fieldNames, modifier) => {
     let value = doc.value;
     if (_.contains(fieldNames, "value")) {
       value = doc.value - modifier.$set.value
+      // Update accounts with the difference value
+      let transfer = doc;
+      transfer.value = - value;
+      Meteor.call("madeTransfer", transfer, (err, result) => {
+        if (err) {
+          return console.error("madeTransfer ", err);
+        }
+      });
     }
   }
-/*
-    // Update Account balance
-    const accountDoc = {
-      $inc: {balance: parseFloat(value)}
-    };
-    Meteor.call("updateAccount", doc.accountId, accountDoc, function(err, result) {
-      if (err) {
-        return console.error("updateAccount", err);
-      }
-    });
-  }
-  */
 
   if (!modifier.$set) modifier.$set = {};
   modifier.$set.lastUpdate = Date.now();

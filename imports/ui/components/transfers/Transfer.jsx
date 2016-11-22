@@ -34,9 +34,11 @@ export default class Transfer extends React.Component {
   render() {
     const createdBy = Meteor.users.findOne({_id: this.props.transfer.createdBy});
     const updatedBy = Meteor.users.findOne({_id: this.props.transfer.updatedBy});
-    let accountLink = `/accounts/${this.props.account._id}`
+    let fromAccountLink = `/accounts/${this.props.fromAccount._id}`;
+    let toAccountLink = `/accounts/${this.props.toAccount._id}`;
     if (this.props.admin) {
-      accountLink = `/admin/accounts/${this.props.account._id}`
+      fromAccountLink = `/admin/accounts/${this.props.fromAccount._id}`;
+      toAccountLink = `/admin/accounts/${this.props.toAccount._id}`;
     }
     return (
       <div className="transfer">
@@ -49,16 +51,20 @@ export default class Transfer extends React.Component {
               &nbsp;<span className="badge">€</span>
             </span>
           </ListGroupItem>
-          <ListGroupItem href={accountLink} >Account : {this.props.account.name ? this.props.account.name : ''}</ListGroupItem>
+          <ListGroupItem href={fromAccountLink} >
+            Sender account :&nbsp;
+            {this.props.fromAccount ? `${this.props.fromAccount.name} - ${this.props.fromAccount.balance} €` : ''}
+          </ListGroupItem>
+          <ListGroupItem href={toAccountLink} >
+            Recipient account :&nbsp;
+            {this.props.toAccount ? `${this.props.toAccount.name} - ${this.props.toAccount.balance} €` : ''}
+          </ListGroupItem>
           <ListGroupItem>Checked :&nbsp;
             {this.props.transfer.checked ?
               <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
             :
               <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
             }
-          </ListGroupItem>
-          <ListGroupItem>
-            Category : {this.props.transfer.category}
           </ListGroupItem>
           <ListGroupItem href={Meteor.user().profile.admin ? `/admin/users/${createdBy._id}` : `/users/${createdBy._id}`}>
             Created by : {createdBy ? createdBy.profile.username : ''}
@@ -77,7 +83,7 @@ export default class Transfer extends React.Component {
             </IntlProvider>
           </ListGroupItem>
         </ListGroup>
-        {this.state.displayUpdate ? <TransferForm accountId={this.props.account._id} transfer={this.props.transfer} /> : ''}
+        {this.state.displayUpdate ? <TransferForm accounts={this.props.accounts} transfer={this.props.transfer} /> : ''}
         <div className="actions">
           <ButtonGroup>
             <Button bsStyle="primary" onClick={this.displayUpdate.bind(this)}>Update</Button>
@@ -91,6 +97,7 @@ export default class Transfer extends React.Component {
 
 Transfer.propTypes = {
   transfer: PropTypes.object.isRequired,
+  accounts: PropTypes.array.isRequired,
   fromAccount: PropTypes.object.isRequired,
   toAccount: PropTypes.object.isRequired,
   admin: PropTypes.bool.isRequired
