@@ -24,11 +24,19 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
 
   setSelectedUser(user) {
     user = Meteor.users.findOne({_id: user._id});
-    this.setState({selectedUser: user});
+    this.setState({
+      selectedUser: user,
+      selectedUserModal: user
+    });
   }
 
   toggleUserModal() {
     this.setState({userModal: !this.state.userModal});
+  }
+
+  newUserModal() {
+    this.setState({selectedUserModal: null});
+    this.toggleUserModal();
   }
 
   findUsers(str) {
@@ -58,7 +66,7 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
     return (
       <Row className="admin-users-page">
         <Col md={12}>
-          <Button bsStyle="primary" onClick={this.toggleUserModal.bind(this)} >New user</Button>
+          <Button bsStyle="primary" onClick={this.newUserModal.bind(this)} >New user</Button>
           <FindUsers findUsers={this.findUsers.bind(this)} />
           <div className="divider"></div>
         </Col>
@@ -72,7 +80,7 @@ export default class AdminUsersPage extends TrackerReact(React.Component) {
               openUserModal={this.toggleUserModal.bind(this)} />
           : ''}
           {this.state.userModal ?
-            <UserModal user={this.state.selectedUser} show={this.state.userModal}
+            <UserModal user={this.state.selectedUserModal} show={this.state.userModal}
               closeUserModal={this.toggleUserModal.bind(this)} />
           : '' }
         </Col>
