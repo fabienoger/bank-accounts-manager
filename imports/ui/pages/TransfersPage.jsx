@@ -11,14 +11,24 @@ export default class TransfersPage extends TrackerReact(React.Component) {
   constructor(props) {
     super(props)
     this.state = {
-      transfers: Meteor.subscribe("userTransfers", Meteor.userId()),
-      accounts: Meteor.subscribe("userAccounts", Meteor.userId())
+      transfers: this.props.admin ? Meteor.subscribe("allTransfers") : Meteor.subscribe("userTransfers", Meteor.userId()),
+      accounts: this.props.admin ? Meteor.subscribe("allAccounts") : Meteor.subscribe("userAccounts", Meteor.userId())
     }
   }
 
   componentWillUnmount() {
     this.state.transfers.stop();
     this.state.accounts.stop();
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    // Stop and start subscribes
+    this.state.accounts.stop();
+    this.state.transfers.stop();
+    this.setState({
+      transfers: nextProps.admin ? Meteor.subscribe("allTransfers") : Meteor.subscribe("userTransfers", Meteor.userId()),
+      accounts: nextProps.admin ? Meteor.subscribe("allAccounts") : Meteor.subscribe("userAccounts", Meteor.userId())
+    });
   }
 
   render() {
@@ -30,7 +40,7 @@ export default class TransfersPage extends TrackerReact(React.Component) {
     return (
       <Row className="transfers-page">
         <Col md={6}>
-          <TransfersList transfers={transfers} accounts={accounts} admin={false} />
+          <TransfersList transfers={transfers} accounts={accounts} admin={this.props.admin} />
         </Col>
         <Col md={6}>
           <TransferForm accounts={accounts} />

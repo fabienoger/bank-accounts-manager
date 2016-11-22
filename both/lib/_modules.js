@@ -20,6 +20,10 @@ Modules = {
         if (!transfer) {
           throw new Meteor.Error("missing-param", "The param 'transfer' is missing !");
         }
+        // Check if the accounts are different
+        if (transfer.fromAccountId == transfer.toAccountId) {
+          throw new Meteor.Error("acounts-must-be-different", "Recipient account and sender account must be different !");
+        }
         return true;
       }
     }

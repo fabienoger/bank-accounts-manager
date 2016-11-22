@@ -99,6 +99,17 @@ adminRoutes.route('/transactions', {
   triggersEnter: [redirectIfIsAdmin]
 });
 
+// Admin trasnfers page
+adminRoutes.route('/transfers', {
+  action: function (params, queryParams) {
+    mount(MainLayout, {
+      pageName: "AdminTransfers",
+      pageComponent: <TransfersPage admin={true} />
+    });
+  },
+  triggersEnter: [redirectIfIsAdmin]
+});
+
 // TRANSFERS
 FlowRouter.route('/transfers', {
   action: function (params, queryParams) {

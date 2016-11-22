@@ -20,12 +20,22 @@ export default class Transfer extends React.Component {
     this.setState({displayUpdate: !this.state.displayUpdate});
   }
 
+  activeTransfer(e) {
+    const doc = {$set: {active: true}};
+    Meteor.call("updateTransfer", this.props.transfer._id, doc, (err, result) => {
+      if (err) {
+        console.error("err ", err);
+        return this.setState({error: err.reason});
+      }
+      this.setState({success: "Transfer has been actived !"});
+    });
+  }
+
   deleteTransfer(e) {
     Meteor.call("deleteTransfer", this.props.transfer._id, (err, result) => {
       if (err) {
         console.error("deleteTransfer ", err);
-        this.setState({error: err.reason});
-        return;
+        return this.setState({error: err.reason});
       }
       this.setState({success: "Transfer has been deleted !"});
     });
@@ -59,6 +69,13 @@ export default class Transfer extends React.Component {
             Recipient account :&nbsp;
             {this.props.toAccount ? `${this.props.toAccount.name} - ${this.props.toAccount.balance} €` : ''}
           </ListGroupItem>
+          <ListGroupItem>Active :&nbsp;
+            {this.props.transfer.active ?
+              <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            :
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            }
+          </ListGroupItem>
           <ListGroupItem>Checked :&nbsp;
             {this.props.transfer.checked ?
               <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -87,7 +104,11 @@ export default class Transfer extends React.Component {
         <div className="actions">
           <ButtonGroup>
             <Button bsStyle="primary" onClick={this.displayUpdate.bind(this)}>Update</Button>
-            <Button bsStyle="danger" onClick={this.deleteTransfer.bind(this)}>Delete</Button>
+            {this.props.transfer.active ?
+              <Button bsStyle="danger" onClick={this.deleteTransfer.bind(this)}>Delete</Button>
+            :
+              this.props.admin && <Button bsStyle="success" onClick={this.activeTransfer.bind(this)} >Enable</Button>
+            }
           </ButtonGroup>
         </div>
       </div>

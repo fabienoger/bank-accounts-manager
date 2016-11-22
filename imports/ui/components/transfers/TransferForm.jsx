@@ -72,6 +72,10 @@ export default class TransferForm extends React.Component {
     if (isNaN(value) || value < 0) {
       return this.setState({error: "Value must be a positive number !"});
     }
+    // Check if the accounts are different
+    if (fromAccountId == toAccount) {
+      return this.setState({error: "Recipient account and sender account must be different !"});
+    }
 
     // If transfer, accounts props are not null update else create
     if (this.props.transfer) {
