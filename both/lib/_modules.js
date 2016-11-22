@@ -2,6 +2,7 @@ Modules = {
   client: {},
   server: {},
   both: {
+    transactionsCategories: ["Other", "Withdrawal", "Hobbies"],
     utils: {
       // Check email format
       checkEmail: email => {

@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
+    "c3": "^0.4.11",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.6",
+    "react-c3js": "^0.1.12",
     "react-dom": "^15.3.2",
     "react-intl": "^2.1.5",
     "react-mounter": "^1.2.0"

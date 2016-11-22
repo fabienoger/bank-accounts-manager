@@ -1,11 +1,12 @@
-import React                from 'react';
-import {Row, Col}           from 'react-bootstrap'
-import TrackerReact         from 'meteor/ultimatejs:tracker-react'
-import Accounts             from '/imports/api/accounts/collection'
-import Transactions         from '/imports/api/transactions/collection'
-import TransactionsList     from '/imports/ui/components/transactions/TransactionsList'
-import TransactionForm      from '/imports/ui/components/transactions/TransactionForm'
-import Loading              from '/imports/ui/components/Loading'
+import React                  from 'react';
+import {Row, Col}             from 'react-bootstrap';
+import TrackerReact           from 'meteor/ultimatejs:tracker-react';
+import Accounts               from '/imports/api/accounts/collection';
+import Transactions           from '/imports/api/transactions/collection';
+import TransactionsList       from '/imports/ui/components/transactions/TransactionsList';
+import TransactionForm        from '/imports/ui/components/transactions/TransactionForm';
+import Loading                from '/imports/ui/components/Loading';
+import TransactionsChartsView from '/imports/ui/components/transactions/TransactionsChartsView';
 
 export default class TransactionsPage extends TrackerReact(React.Component) {
   constructor(props) {
@@ -37,6 +38,7 @@ export default class TransactionsPage extends TrackerReact(React.Component) {
     const transactions = this.getTransactions();
     return (
       <Row className="transactions-page">
+        <TransactionsChartsView transactions={transactions} />
         <Col md={6}>
           <TransactionsList transactions={transactions} admin={false} />
         </Col>

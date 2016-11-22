@@ -118,7 +118,7 @@ export default class TransactionForm extends React.Component {
 
   render() {
     const accounts = this.props.accounts;
-    const categories = ["Other", "Withdrawal", "Hobbies"];
+    const categories = Modules.both.transactionsCategories;
     return (
       <form className="transaction-form panel panel-primary" onSubmit={this.handleSubmit.bind(this)}>
         <div className="panel-heading">
