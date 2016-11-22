@@ -9,7 +9,7 @@ export default class AccountSelect extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.value) {
+    if (this.props.defaultValue) {
       this.setState({value: this.props.defaultValue})
     }
   }
@@ -19,7 +19,8 @@ export default class AccountSelect extends React.Component {
     return (
       <div className="form-group">
         <label htmlFor={this.props.label} >{this.props.label}</label>
-        <select ref="AccountSelect" id={this.props.label} className="form-control" onChange={this.props.selectChange.bind(this)} defaultValue={this.state.value}>
+        <select ref="AccountSelect" id={this.props.label} className="form-control"
+          onChange={this.props.selectChange.bind(this)} defaultValue={this.state.value}>
           {accounts.map((account) => {
             return (<option key={account._id} value={account._id}>{account.name} - {account.balance} €</option>)
           })}

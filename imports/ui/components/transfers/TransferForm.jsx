@@ -14,7 +14,8 @@ export default class TransferForm extends React.Component {
       value: null,
       checked: null,
       fromAccount: null,
-      toAccount: null
+      toAccount: null,
+      toAccountList: []
     }
   }
 
@@ -27,12 +28,27 @@ export default class TransferForm extends React.Component {
   checkedChange(e) {
     this.setState({checked: e.target.checked});
   }
+
+  // Return Array of accounts without _id
+  accountListWithoutId(accounts, accountId) {
+    if (!accounts) {
+      return [];
+    }
+    if (!accountId) {
+      return accounts;
+    }
+    return _.without(accounts, _.findWhere(accounts, {_id: accountId}));
+  }
+
   fromAccountChange(e) {
-    console.log(" e.target.value.trim() ", e.target.value.trim());
-    this.setState({fromAccount: e.target.value.trim()});
+    const fromAccountId = e.target.value.trim();
+    const toAccountList = this.accountListWithoutId(this.props.accounts, fromAccountId);
+    this.setState({
+      fromAccountId,
+      toAccountList
+    });
   }
   toAccountChange(e) {
-    console.log(" e.target.value.trim() ", e.target.value.trim());
     this.setState({toAccount: e.target.value.trim()});
   }
 
@@ -43,12 +59,12 @@ export default class TransferForm extends React.Component {
       success: null
     });
 
-    // Find the text field via the React ref
+    // Find the text field via the React ref & state
     const name = ReactDOM.findDOMNode(this.refs.name).value.trim();
     const value = ReactDOM.findDOMNode(this.refs.value).value.trim();
-    const fromAccountId = ReactDOM.findDOMNode(this.refs.fromAccount).value.trim();
-    const toAccountId = ReactDOM.findDOMNode(this.refs.toAccount).value.trim();
     const checked = ReactDOM.findDOMNode(this.refs.checked).checked;
+    const fromAccountId = this.state.fromAccountId;
+    const toAccountId = this.state.toAccountId;
     // Check values
     if (!name || !value || !fromAccountId || !toAccountId) {
       return this.setState({error: "All fields are required !"});
@@ -58,7 +74,7 @@ export default class TransferForm extends React.Component {
     }
 
     // If transfer, accounts props are not null update else create
-    if (this.props.transfer && this.props.accountId) {
+    if (this.props.transfer) {
       const accountId = this.props.accountId;
       const doc = {
         $set: {
@@ -83,12 +99,10 @@ export default class TransferForm extends React.Component {
         ReactDOM.findDOMNode(this.refs.checked).cheked = false;
       });
     } else {
-      const accountId = ReactDOM.findDOMNode(this.refs.accountSelect).value.trim();
-      Meteor.call("createTransfer", name, value, category, checked, accountId, (err, result) => {
+      Meteor.call("createTransfer", name, value, checked, fromAccountId, toAccountId, (err, result) => {
         if (err) {
           console.error("createTransfer ", err);
-          this.setState({error: err.reason});
-          return;
+          return this.setState({error: err.reason});
         }
         this.setState({success: "Transfer has been created !"});
         // Clear form
@@ -110,14 +124,30 @@ export default class TransferForm extends React.Component {
         fromAccount: this.props.transfer.fromAccountId
       });
     }
-    if (this.props.accountId) {
-      this.setState({accountId: this.props.accountId})
+    if (this.props.fromAccountId) {
+      this.setState({
+        fromAccountId: this.props.fromAccountId,
+        toAccountList: this.accountListWithoutId(this.props.accounts, this.props.transfer.fromAccountId)
+      })
+    } else if (this.props.accounts.length > 1) {
+      this.setState({
+        fromAccountId: this.props.accounts[0]._id,
+        toAccountList: this.accountListWithoutId(this.props.accounts, this.props.accounts[0]._id)
+      })
+    }
+    if (this.props.toAccountId) {
+      this.setState({toAccountId: this.props.toAccountId})
+    } else if (this.props.accounts.length > 1) {
+      this.setState({toAccountId: this.props.accounts[1]._id})
     }
   }
 
   render() {
     const accounts = this.props.accounts;
-    const categories = ["Other", "Withdrawal", "Hobbies"];
+    const toAccountList = this.accountListWithoutId(this.props.accounts, this.state.fromAccountId);
+    if (accounts.length < 2) {
+      return (<Alert message="You need to create an account before !" type="warning" />)
+    }
     return (
       <form className="transfer-form panel panel-primary" onSubmit={this.handleSubmit.bind(this)}>
         <div className="panel-heading">
@@ -131,10 +161,10 @@ export default class TransferForm extends React.Component {
             accounts.length > 0 ?
               [<AccountSelect key="1" label="Select the account to be debited"
                 selectChange={this.fromAccountChange.bind(this)}
-                accounts={accounts} ref="fromAccount" defaultValue={accounts[0]._id} />,
+                accounts={accounts} ref="fromAccount" defaultValue={this.state.fromAccountId} />,
               <AccountSelect key="2" label="Select the account to be credited"
                 selectChange={this.toAccountChange.bind(this)}
-                accounts={accounts} ref="toAccount" />]
+                accounts={toAccountList} ref="toAccount" defaultValue={this.state.toAccountId} />]
             :  <Alert message="You need to create an account before !" type="warning" />
           : ''
           }
@@ -166,6 +196,6 @@ export default class TransferForm extends React.Component {
 TransferForm.propTypes = {
   fromAccountId: PropTypes.string,
   toAccountId: PropTypes.string,
-  accounts: PropTypes.array,
+  accounts: PropTypes.array.isRequired,
   transfer: PropTypes.object,
 };

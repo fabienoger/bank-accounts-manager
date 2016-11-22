@@ -3,7 +3,7 @@ import Transfers from './collection.jsx'
 
 Meteor.methods({
   createTransfer: (name, value, checked, fromAccountId, toAccountId) => {
-    if (!name || !value || !accountId || !category) {
+    if (!name || !value || !fromAccountId || !toAccountId) {
       throw new Meteor.Error("fields-required", "All fields are required !");
     }
     if (isNaN(value) || value < 0) {

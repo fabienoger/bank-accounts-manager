@@ -74,5 +74,27 @@ Meteor.methods({
       doc.$set.balance = parseFloat(doc.$set.balance);
     }
     return BankAccounts.update({_id: id}, doc);
+  },
+  // Check if sender Account can not be debited
+  // Debit and credit accounts
+  madeTransfer: (transfer) => {
+    if (!transfer) {
+      throw new Meteor.Error("missing-param", "The param 'transfer' is missing !");
+    }
+    if (!Modules.both.utils.checkIfTransferCanBeMade(transfer)) {
+      throw new Meteor.Error("transfer-can-not-be-made", "The transfer can not be made !");
+    }
+    const fromAccountDoc = {
+      $inc: {balance: - parseFloat(transfer.value)}
+    };
+    const toAccountDoc = {
+      $inc: {balance: parseFloat(transfer.value)}
+    };
+    BankAccounts.update({_id: transfer.fromAccountId}, fromAccountDoc, (err, result) => {
+      if (err) {
+        return err;
+      }
+      return BankAccounts.update({_id: transfer.toAccountId}, toAccountDoc);
+    });
   }
 });

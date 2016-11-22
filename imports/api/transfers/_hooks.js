@@ -6,17 +6,11 @@ Transfers.before.insert((userId, doc) => {
   doc.updatedBy = userId;
   doc.lastUpdate = Date.now();
   doc.active = true;
-  const accountDoc = {
-    $inc: {balance: - parseFloat(value)}
-  };
-  console.log("doc ", doc);
-  return;
-  Meteor.call("updateAccount", foundAccount._id, accountDoc, function(err, result) {
+  Meteor.call("madeTransfer", doc, (err, result) => {
     if (err) {
-      return console.error("updateAccount", err);
+      return console.error("madeTransfer ", err);
     }
   });
-
 });
 
 Transfers.before.update((userId, doc, fieldNames, modifier) => {

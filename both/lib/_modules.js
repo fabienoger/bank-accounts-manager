@@ -14,6 +14,13 @@ Modules = {
           return true;
         }
         return false;
+      },
+      // Check if sender Account can not be debited
+      checkIfTransferCanBeMade: transfer => {
+        if (!transfer) {
+          throw new Meteor.Error("missing-param", "The param 'transfer' is missing !");
+        }
+        return true;
       }
     }
   }
