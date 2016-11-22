@@ -1,10 +1,10 @@
 import Transfers from './collection'
 
 Transfers.before.insert((userId, doc) => {
-  doc.createdAt = Date.now();
+  doc.createdAt = new Date();
   doc.createdBy = userId;
   doc.updatedBy = userId;
-  doc.lastUpdate = Date.now();
+  doc.lastUpdate = new Date();
   doc.active = true;
   Meteor.call("madeTransfer", doc, (err, result) => {
     if (err) {
@@ -31,6 +31,6 @@ Transfers.before.update((userId, doc, fieldNames, modifier) => {
   }
 
   if (!modifier.$set) modifier.$set = {};
-  modifier.$set.lastUpdate = Date.now();
+  modifier.$set.lastUpdate = new Date();
   modifier.$set.updatedBy = userId;
 });
