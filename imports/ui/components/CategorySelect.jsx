@@ -61,6 +61,7 @@ export default class CategorySelect extends React.Component {
 
   render() {
     const categories = this.state.categories;
+    const defaultCategory = this.state.category || this.state.categories[0];
     return (
       <div className="form-group">
         <label htmlFor="categorySelectInput">Choose a category</label>
@@ -76,7 +77,7 @@ export default class CategorySelect extends React.Component {
           </span>
         </div>
         <select ref="categorySelect" id="categorySelect" className="form-control"
-          onChange={this.handleChange.bind(this)} defaultValue={this.state.category || this.state.categories[0]}>
+          onChange={this.handleChange.bind(this)} defaultValue={defaultCategory}>
           {categories.map((category) => {
             return (<option key={category} value={category}>{category}</option>)
           })}
