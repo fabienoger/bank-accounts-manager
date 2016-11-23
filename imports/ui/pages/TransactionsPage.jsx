@@ -38,7 +38,7 @@ export default class TransactionsPage extends TrackerReact(React.Component) {
     const transactions = this.getTransactions();
     return (
       <Row className="transactions-page">
-        <TransactionsChartsView transactions={transactions} />
+        {transactions.length > 0 && <TransactionsChartsView transactions={transactions} />}
         <Col md={6}>
           <TransactionsList transactions={transactions} admin={false} />
         </Col>

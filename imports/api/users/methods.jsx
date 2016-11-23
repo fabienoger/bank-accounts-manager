@@ -1,6 +1,13 @@
 import {Meteor}     from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
+Accounts.onCreateUser((options, user) => {
+  options.profile.categories = Modules.both.transactionsCategories;
+  if (options.profile) {
+    user.profile = options.profile;
+  }
+  return user;
+});
 Meteor.methods({
   updateUser: (id, doc) => {
     if (!id || !doc) {

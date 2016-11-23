@@ -23,7 +23,6 @@ export default class TransactionsChartsView extends React.Component {
     return (
       <Col md={12} className="transactions-charts-view" style={style}>
         <Button bsStyle="primary" onClick={this.toggleModal.bind(this)}>
-          DataViz&nbsp;
           <span className="glyphicon glyphicon-signal" aria-hidden="true"></span>
         </Button>
         <Modal show={this.state.showModal} onHide={this.toggleModal.bind(this)}>

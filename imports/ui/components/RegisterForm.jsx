@@ -51,7 +51,7 @@ export default class RegisterForm extends React.Component {
         console.error("createUser", err);
         return this.setState({error: err.reason});
       }
-      FlowRouter.go('home');
+      FlowRouter.redirect('/');
     });
   }
 

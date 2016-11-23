@@ -3,6 +3,7 @@ import ReactDOM           from 'react-dom';
 import { Meteor }         from 'meteor/meteor';
 import Alert              from '/imports/ui/components/Alert';
 import AccountSelect      from '/imports/ui/components/AccountSelect';
+import CategorySelect     from '/imports/ui/components/CategorySelect';
 
 export default class TransactionForm extends React.Component {
   constructor(props) {
@@ -44,8 +45,8 @@ export default class TransactionForm extends React.Component {
     // Find the text field via the React ref
     const name = ReactDOM.findDOMNode(this.refs.name).value.trim();
     const value = ReactDOM.findDOMNode(this.refs.value).value.trim();
-    const category = ReactDOM.findDOMNode(this.refs.categorySelect).value.trim();
     const checked = ReactDOM.findDOMNode(this.refs.checked).checked;
+    const category = this.state.category;
     // Check values
     if (!name || !value || !category) {
       return this.setState({error: "All fields are required !"});
@@ -111,14 +112,18 @@ export default class TransactionForm extends React.Component {
     }
     if (this.props.accountId) {
       this.setState({accountId: this.props.accountId})
-    } else {
+    } else if (this.props.accounts.length > 0) {
       this.setState({accountId: this.props.accounts[0]._id})
     }
   }
 
   render() {
     const accounts = this.props.accounts;
-    const categories = Modules.both.transactionsCategories;
+    const user = Meteor.user();
+    let categories = Modules.both.transactionsCategories;
+    if (user && user.profile.categories) {
+      categories = user.profile.categories;
+    }
     return (
       <form className="transaction-form panel panel-primary" onSubmit={this.handleSubmit.bind(this)}>
         <div className="panel-heading">
@@ -147,14 +152,7 @@ export default class TransactionForm extends React.Component {
               id="value" placeholder="Transaction value"
               value={this.state.value || ''} onChange={this.valueChange.bind(this)} />
           </div>
-          <div className="form-group">
-            <label htmlFor="categorySelect">Choose a category</label>
-            <select ref="categorySelect" id="categorySelect" className="form-control" onChange={this.categoryChange.bind(this)}>
-              {categories.map((category) => {
-                return (<option key={category} value={category}>{category}</option>)
-              })}
-            </select>
-          </div>
+          <CategorySelect categories={categories} categoryChange={this.categoryChange.bind(this)} />
           <div className="checkbox">
             <label>
               <input type="checkbox" ref="checked" onChange={this.checkedChange.bind(this)} checked={this.state.checked ? true : false}/> Checked
@@ -171,6 +169,6 @@ export default class TransactionForm extends React.Component {
 
 TransactionForm.propTypes = {
   accountId: PropTypes.string,
-  accounts: PropTypes.array,
+  accounts: PropTypes.array.isRequired,
   transaction: PropTypes.object,
 };
